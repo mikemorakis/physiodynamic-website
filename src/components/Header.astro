@@ -1,0 +1,607 @@
+---
+import { site, serviceGroups } from '../data/site';
+import { heroServices } from '../data/home';
+
+const groupIcons: Record<string, string> = {
+  hand: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V6a2 2 0 1 1 4 0v5"/><path d="M11 11V4a2 2 0 1 1 4 0v7"/><path d="M15 11V6a2 2 0 1 1 4 0v9a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-3a2 2 0 1 1 4 0"/></svg>',
+  needle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3l-8 8"/><path d="M14 4l6 6"/><path d="M13 11l-9 9-1 2 2-1 9-9"/></svg>',
+  device: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M7 10h2l1-2 2 4 1-2h4"/></svg>',
+  movement: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M6 22l3-8 3 3v5"/><path d="M12 17l4-3-1-5-4 2-3 4"/><path d="M18 10l3 1"/></svg>',
+  special: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.5L12 14.5 7.1 17.2l.9-5.5-4-3.9L9.5 7z"/></svg>',
+};
+
+const serviceImageMap = new Map(heroServices.map((s) => [s.slug, s.image] as const));
+
+// Flat, ordered list of every service — used by the mobile drawer.
+const flatServices = heroServices;
+---
+<header class="site-header">
+  <div class="strip">
+    <div class="wrap">
+      <p>Συμβεβλημένοι με όλα τα ταμεία — Καλέστε στο <a href={`tel:00302117506000`}><strong>{site.phoneDisplay}</strong></a></p>
+    </div>
+  </div>
+
+  <div class="main-bar">
+    <div class="wrap main-inner">
+      <a href="/" class="brand" aria-label={site.name}>
+        <img src="https://physiodynamic.com.gr/wp-content/uploads/2022/03/cropped-logo-%CE%99%CF%89%CE%AC%CE%BD%CE%BD%CE%B7%CF%82-%CE%9A%CF%89%CF%84%CE%BF%CF%85%CE%BB%CE%B1%CF%82-e1648814356905-307x58.jpg" alt={site.name} width="307" height="58" />
+      </a>
+
+      <nav class="primary-nav" aria-label="Κύρια πλοήγηση">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">
+          <span class="sr-only">Άνοιγμα μενού</span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+
+        <div id="primary-menu" class="menu-wrap">
+          <!-- ============ MOBILE DRAWER (leontia-style) ============ -->
+          <div class="mob-drawer" aria-hidden="true">
+            <!-- Dark hero band -->
+            <section class="mob-hero">
+              <div class="mob-hero-bg" aria-hidden="true"></div>
+              <div class="mob-hero-top">
+                <a href="/" class="mob-hero-brand">
+                  <span class="mob-hero-brand-name">Physio Dynamic</span>
+                </a>
+                <button type="button" class="mob-close" aria-label="Κλείσιμο μενού">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+              </div>
+              <div class="mob-hero-body">
+                <p class="mob-hero-eyebrow">Παλαιό Φάληρο · Σύγχρονο κέντρο</p>
+                <h2 class="mob-hero-title">Ξεκινήστε την<br/>αποκατάστασή σας.</h2>
+                <p class="mob-hero-lede">15 υπηρεσίες φυσικοθεραπείας. Συμβεβλημένοι με όλα τα ταμεία. Άμεσο ραντεβού.</p>
+                <a href={site.bookingUrl} target="_blank" rel="noopener" class="mob-hero-cta">
+                  <span>Κλείσε ραντεβού online</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </a>
+                <div class="mob-hero-proof">
+                  <span class="mob-stars" aria-hidden="true">★★★★★</span>
+                  <span class="mob-rating">5.0</span>
+                  <span class="mob-dot" aria-hidden="true">·</span>
+                  <a href={`tel:00302117506000`}>{site.phoneDisplay}</a>
+                </div>
+              </div>
+            </section>
+
+            <!-- Services list header -->
+            <div class="mob-services-head">
+              <span class="mob-section-label">Οι υπηρεσίες μας</span>
+              <span class="mob-services-count">{flatServices.length} θεραπείες</span>
+            </div>
+
+            <!-- Numbered service list -->
+            <ol class="mob-services-list">
+              {flatServices.map((s, i) => (
+                <li>
+                  <a href={`/${s.slug}/`}>
+                    <figure class="mob-thumb">
+                      <img src={s.image} alt="" loading="lazy" />
+                      <span class="mob-thumb-num">{String(i + 1).padStart(2, '0')}</span>
+                    </figure>
+                    <span class="mob-service-body">
+                      <span class="mob-service-title">{s.title}</span>
+                      <span class="mob-service-desc">{s.body}</span>
+                    </span>
+                    <svg class="mob-service-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+                  </a>
+                </li>
+              ))}
+            </ol>
+
+            <!-- Secondary nav -->
+            <div class="mob-secondary">
+              <a href="/">Αρχική</a>
+              <a href="/ποιοι-ειμαστε/">Προφίλ</a>
+              <a href="/category/physiodynamic-blog/">Blog</a>
+              <a href="/επικοινωνια/">Επικοινωνία</a>
+            </div>
+          </div>
+
+          <!-- ============ DESKTOP MENU ============ -->
+          <ul class="menu">
+            <li><a href="/">Αρχική</a></li>
+            <li><a href="/ποιοι-ειμαστε/">Προφίλ</a></li>
+            <li class="has-mega">
+              <button type="button" class="mega-toggle" aria-expanded="false" aria-haspopup="true">
+                Υπηρεσίες
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="mega-panel" role="menu">
+                <div class="mega-inner">
+                  <div class="mega-cols">
+                    {serviceGroups.map((group) => (
+                      <div class="mega-col">
+                        <div class="mega-col-head">
+                          <span class="mega-icon" aria-hidden="true" set:html={groupIcons[group.icon]}></span>
+                          <h3 class="mega-col-title">{group.title}</h3>
+                        </div>
+                        <p class="mega-col-blurb">{group.blurb}</p>
+                        <div class="mega-col-divider" aria-hidden="true"></div>
+                        <ul class="mega-list">
+                          {group.items.map((item) => (
+                            <li>
+                              <a href={`/${item.slug}/`}>
+                                <img class="mega-item-thumb" src={serviceImageMap.get(item.slug)} alt="" loading="lazy" />
+                                <span class="mega-item-text">
+                                  <span class="mega-item-title">{item.title}</span>
+                                  <span class="mega-item-desc">{item.desc}</span>
+                                </span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                  <div class="mega-cta">
+                    <div>
+                      <p class="mega-cta-eyebrow">Δεν είστε σίγουροι;</p>
+                      <p class="mega-cta-text">Καλέστε μας ή κλείστε ραντεβού για μια εξατομικευμένη αξιολόγηση.</p>
+                    </div>
+                    <div class="mega-cta-actions">
+                      <a href={`tel:00302117506000`} class="btn">Καλέστε {site.phoneDisplay}</a>
+                      <a href={site.bookingUrl} target="_blank" rel="noopener" class="btn btn-accent">Κλείσε ραντεβού online</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li><a href="/category/physiodynamic-blog/">Blog</a></li>
+            <li><a href="/επικοινωνια/">Επικοινωνία</a></li>
+            <li><a href={site.bookingUrl} target="_blank" rel="noopener" class="cta">Κλείσε ραντεβού online</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 250; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+  .strip { background: var(--color-primary); color: #fff; font-size: 0.85rem; padding: 0.35rem 0; }
+  .strip p { margin: 0; text-align: center; }
+  .strip a { color: var(--color-accent); }
+  .strip a strong { color: var(--color-accent); }
+
+  .main-bar { padding: 0.6rem 0; }
+  .main-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+
+  .brand { display: flex; text-decoration: none; }
+  .brand img { height: 58px; width: auto; display: block; }
+
+  .primary-nav { display: flex; align-items: center; }
+  .menu-wrap { display: contents; }
+  .mob-drawer { display: none; }
+
+  .menu { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.75rem; align-items: center; }
+  .menu > li > a,
+  .menu > li > .mega-toggle {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+  }
+  .menu > li > a:hover,
+  .menu > li > .mega-toggle:hover { color: var(--color-primary); }
+
+  .menu .cta {
+    background: var(--color-primary) !important;
+    color: #fff !important;
+    padding: 0.85rem 1.5rem !important;
+    margin-left: 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+    line-height: 1.4;
+    font-size: 0.75rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(16, 50, 124, 0.25);
+    transition: all 0.2s;
+  }
+  .menu .cta:hover {
+    background: var(--color-accent) !important;
+    color: var(--color-primary-dark) !important;
+    box-shadow: 0 4px 12px rgba(167, 240, 0, 0.35);
+  }
+
+  /* Desktop mega menu (unchanged) */
+  .has-mega { position: static; }
+  .mega-toggle { position: relative; padding: 0.75rem 0 !important; margin: -0.75rem 0; }
+  .mega-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: calc(100% - 2.5rem);
+    max-width: var(--wrap);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-accent);
+    border-radius: var(--radius);
+    box-shadow: 0 20px 40px rgba(16, 50, 124, 0.18);
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(-50%, -6px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear 0.2s;
+    pointer-events: none;
+    padding: 0;
+    z-index: 90;
+    margin-top: 8px;
+  }
+  .mega-panel::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: transparent;
+  }
+  .has-mega:focus-within .mega-panel,
+  .has-mega.hover-open .mega-panel,
+  .has-mega.open .mega-panel {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s;
+  }
+  .mega-inner { max-width: var(--wrap); margin: 0 auto; padding: 2rem 1.25rem 1.5rem; }
+  .mega-cols { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: auto auto auto 1fr; column-gap: 1.5rem; row-gap: 0; }
+  .mega-col { display: grid; grid-template-rows: subgrid; grid-row: span 4; row-gap: 0; }
+  .mega-col-head { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .mega-col-divider { border-bottom: 1px solid var(--color-border); margin: 0.75rem 0 0.9rem; align-self: start; }
+  .mega-icon { flex-shrink: 0; width: 34px; height: 34px; background: var(--color-primary); color: var(--color-accent); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; }
+  .mega-icon :global(svg) { width: 20px; height: 20px; }
+  .mega-col-title { font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: var(--color-primary); margin: 0; letter-spacing: 0.02em; line-height: 1.2; align-self: center; }
+  .mega-col-blurb { margin: 0.75rem 0 0; font-size: 0.75rem; color: var(--color-text-muted); line-height: 1.4; }
+  .mega-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.15rem; }
+  .mega-list a { display: block; padding: 0.5rem 0.65rem; border-radius: var(--radius); text-decoration: none; color: var(--color-text); transition: background 0.15s; }
+  .mega-list a:hover { background: var(--color-bg-alt); }
+  .mega-list a:hover .mega-item-title { color: var(--color-primary); }
+  .mega-item-thumb { display: none; }
+  .mega-item-title { display: block; font-size: 0.9rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.1rem; }
+  .mega-item-desc { display: block; font-size: 0.75rem; color: var(--color-text-muted); line-height: 1.3; }
+  .mega-cta { margin-top: 1.5rem; padding: 1.25rem 1.5rem; background: var(--color-bg-alt); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .mega-cta-eyebrow { margin: 0 0 0.25rem; font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: var(--color-primary); letter-spacing: 0.05em; }
+  .mega-cta-text { margin: 0; font-size: 0.9rem; color: var(--color-text-muted); }
+  .mega-cta-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .mega-cta-actions .btn { padding: 0.6rem 1.1rem; font-size: 0.8rem; }
+
+  .nav-toggle { display: none; background: none; border: 0; padding: 0.5rem; cursor: pointer; }
+  .nav-toggle .bar { display: block; width: 24px; height: 3px; background: var(--color-primary); margin: 4px 0; border-radius: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  @media (max-width: 1100px) {
+    .mega-cols { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ============ MOBILE DRAWER ============ */
+  @media (max-width: 900px) {
+    .nav-toggle { display: block; }
+
+    .menu-wrap {
+      display: block;
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: min(420px, 100vw);
+      background: #fff;
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
+      z-index: 200;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      box-shadow: -10px 0 40px rgba(16, 50, 124, 0.25);
+    }
+    .menu-wrap.open { transform: translateX(0); }
+
+    /* Hide the desktop-oriented ul.menu on mobile */
+    .menu { display: none; }
+
+    .mob-drawer { display: block; }
+
+    /* HERO */
+    .mob-hero {
+      position: relative;
+      color: #fff;
+      padding: 1.25rem 1.5rem 2rem;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .mob-hero-bg {
+      position: absolute; inset: 0; z-index: -1;
+      background-image:
+        linear-gradient(180deg, rgba(0,8,127,0.92) 0%, rgba(16,50,124,0.85) 100%),
+        url('/wp-content/uploads/2022/04/GIO_7728.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .mob-hero-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.25rem; }
+    .mob-hero-brand { display: inline-flex; text-decoration: none; align-items: center; }
+    .mob-hero-brand-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: #fff;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .mob-close {
+      width: 40px; height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .mob-close:hover { background: rgba(255,255,255,0.15); }
+
+    .mob-hero-eyebrow {
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.72rem;
+      color: var(--color-accent);
+      margin: 0 0 0.75rem;
+    }
+    .mob-hero-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 1.1;
+      color: #fff;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.01em;
+    }
+    .mob-hero-lede {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.82);
+      margin: 0 0 1.5rem;
+      line-height: 1.5;
+    }
+
+    .mob-hero-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-accent);
+      color: var(--color-primary-dark);
+      text-decoration: none;
+      padding: 1rem 1.15rem;
+      border-radius: var(--radius);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.85rem;
+    }
+    .mob-hero-cta:hover { background: var(--color-accent-2); }
+
+    .mob-hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
+    }
+    .mob-stars { color: var(--color-accent); letter-spacing: 0.1em; }
+    .mob-rating { font-weight: 700; color: #fff; }
+    .mob-dot { opacity: 0.5; }
+    .mob-hero-proof a { color: rgba(255,255,255,0.95); text-decoration: none; font-weight: 500; }
+
+    /* SERVICES HEADER */
+    .mob-services-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.5rem 1.5rem 0.75rem;
+      background: var(--color-bg-alt);
+    }
+    .mob-section-label {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.72rem;
+      color: var(--color-primary);
+    }
+    .mob-services-count {
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+    }
+
+    /* SERVICE LIST */
+    .mob-services-list {
+      list-style: none;
+      margin: 0;
+      padding: 0.5rem 1rem 1.5rem;
+      background: var(--color-bg-alt);
+      counter-reset: mob-service;
+    }
+    .mob-services-list li { margin-bottom: 0.5rem; }
+    .mob-services-list li:last-child { margin-bottom: 0; }
+    .mob-services-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.7rem 0.85rem 0.7rem 0.7rem;
+      background: #fff;
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid transparent;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .mob-services-list a:hover, .mob-services-list a:active {
+      border-color: var(--color-primary);
+      transform: translateY(-1px);
+    }
+    .mob-thumb {
+      position: relative;
+      flex-shrink: 0;
+      width: 68px; height: 68px;
+      margin: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--color-bg-alt);
+    }
+    .mob-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mob-thumb-num {
+      position: absolute;
+      top: 5px; left: 6px;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(0, 8, 127, 0.55);
+      padding: 2px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.05em;
+      backdrop-filter: blur(4px);
+    }
+    .mob-service-body { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 0.2rem; }
+    .mob-service-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--color-primary);
+      line-height: 1.2;
+    }
+    .mob-service-desc {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .mob-service-arrow { color: var(--color-primary); flex-shrink: 0; opacity: 0.4; }
+
+    /* SECONDARY NAV */
+    .mob-secondary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      padding: 0.5rem 1.5rem 2rem;
+      background: var(--color-bg-alt);
+      border-top: 1px solid var(--color-border);
+    }
+    .mob-secondary a {
+      flex: 1 1 50%;
+      padding: 1rem 0.5rem;
+      text-align: center;
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.8rem;
+      color: var(--color-primary);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .mob-secondary a:nth-child(odd) { border-right: 1px solid var(--color-border); }
+    .mob-secondary a:nth-last-child(-n+2) { border-bottom: 0; }
+    .mob-secondary a:hover, .mob-secondary a:active { background: rgba(16, 50, 124, 0.05); }
+
+    /* Backdrop — behind the drawer but above the page.
+       pointer-events: none so it never intercepts clicks intended for the drawer;
+       we use a document-level click listener to close on outside-tap. */
+    body.menu-open { overflow: hidden; }
+    body.menu-open::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 8, 127, 0.5);
+      z-index: 150;
+      pointer-events: none;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const menuWrap = document.getElementById('primary-menu');
+  const closeBtn = document.querySelector<HTMLButtonElement>('.mob-close');
+
+  const closeMenu = () => {
+    menuWrap?.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = menuWrap?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('menu-open', !!isOpen);
+  });
+
+  closeBtn?.addEventListener('click', closeMenu);
+
+  menuWrap?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      if (menuWrap.classList.contains('open')) closeMenu();
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menuWrap?.classList.contains('open')) return;
+    const target = e.target as Node;
+    if (menuWrap.contains(target) || toggle?.contains(target)) return;
+    closeMenu();
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.mega-toggle').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const parent = btn.closest('.has-mega');
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      parent?.classList.toggle('open', !expanded);
+      btn.setAttribute('aria-expanded', String(!expanded));
+    });
+  });
+
+  document.querySelectorAll<HTMLLIElement>('.has-mega').forEach((li) => {
+    let closeTimer: ReturnType<typeof setTimeout> | undefined;
+    const open = () => {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = undefined; }
+      li.classList.add('hover-open');
+    };
+    const scheduleClose = () => {
+      if (closeTimer) clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => li.classList.remove('hover-open'), 350);
+    };
+    li.addEventListener('mouseenter', open);
+    li.addEventListener('mouseleave', scheduleClose);
+    const panel = li.querySelector<HTMLElement>('.mega-panel');
+    panel?.addEventListener('mouseenter', open);
+    panel?.addEventListener('mouseleave', scheduleClose);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll<HTMLLIElement>('.has-mega.open, .has-mega.hover-open').forEach((li) => {
+        li.classList.remove('open');
+        li.classList.remove('hover-open');
+        li.querySelector('.mega-toggle')?.setAttribute('aria-expanded', 'false');
+      });
+      if (menuWrap?.classList.contains('open')) closeMenu();
+    }
+  });
+</script>

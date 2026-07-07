@@ -1,0 +1,85 @@
+---
+import { site } from '../data/site';
+---
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <h3 class="footer-heading">Physio Dynamic</h3>
+      <p class="muted">Κέντρο Φυσικοθεραπείας<br />{site.owner}</p>
+      <div class="social">
+        <a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5C10.5 7 12 5.7 14.2 5.7c1 0 2.1.2 2.1.2V8h-1.2c-1.2 0-1.6.7-1.6 1.5V12h2.7l-.4 3h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="footer-heading">Επικοινωνία</h3>
+      <p>
+        <a href={`tel:00302117506000`}>{site.phones[0]}</a><br />
+        <a href={`tel:00306936579008`}>{site.phones[1]}</a>
+      </p>
+      <p class="muted">{site.addressLine}</p>
+    </div>
+
+    <div>
+      <h3 class="footer-heading">Ωράριο</h3>
+      <ul class="hours">
+        {site.hours.map((h) => (
+          <li><span>{h.day}</span><span>{h.time}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="footer-heading">Χρήσιμοι σύνδεσμοι</h3>
+      <ul class="link-list">
+        <li><a href="/">Αρχική</a></li>
+        <li><a href="/ποιοι-ειμαστε/">Προφίλ</a></li>
+        <li><a href="/υπηρεσιες/">Υπηρεσίες</a></li>
+        <li><a href="/category/physiodynamic-blog/">Blog</a></li>
+        <li><a href="/επικοινωνια/">Επικοινωνία</a></li>
+        <li><a href={site.bookingUrl} target="_blank" rel="noopener">Κλείσε ραντεβού</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="wrap bottom-inner">
+      <p>&copy; 2022 – {new Date().getFullYear()} Physio Dynamic. All rights reserved.</p>
+      <p>Designed by <a href="https://www.symbols.gr/" target="_blank" rel="noopener">Symbols®</a> · Developed by <a href="https://www.symbols.gr/" target="_blank" rel="noopener">shortcode®</a></p>
+    </div>
+  </div>
+
+  <a href={`tel:00302117506000`} class="call-fab" aria-label={`Καλέστε ${site.phoneDisplay}`}>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.2 0-2.5-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.4-1.1-.6-2.4-.6-3.6 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.4c0-.6-.4-1-1-1z"/></svg>
+    <span>Καλέστε μας</span>
+  </a>
+</footer>
+
+<style>
+  .site-footer { background: var(--color-primary); color: rgba(255,255,255,0.85); margin-top: 4rem; padding-top: 3rem; }
+  .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; padding-bottom: 2rem; }
+  .footer-heading { color: #fff; font-size: 1rem; margin-bottom: 1rem; }
+  .site-footer a { color: var(--color-accent); }
+  .site-footer a:hover { color: #fff; }
+  .site-footer .muted { color: rgba(255,255,255,0.7); }
+
+  .social { display: flex; gap: 0.75rem; margin-top: 1rem; }
+  .social a { display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: 50%; color: #fff; }
+  .social a:hover { background: var(--color-accent); color: var(--color-primary-dark); }
+
+  .hours, .link-list { list-style: none; padding: 0; margin: 0; }
+  .hours li { display: flex; justify-content: space-between; padding: 0.25rem 0; gap: 1rem; }
+  .link-list li { padding: 0.2rem 0; }
+
+  .bottom { border-top: 1px solid rgba(255,255,255,0.15); padding: 1.5rem 0; margin-top: 1rem; font-size: 0.85rem; }
+  .bottom-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  .bottom-inner p { margin: 0; }
+
+  .call-fab { display: none; }
+  @media (max-width: 600px) { .call-fab span { display: none; } .call-fab { padding: 0.85rem; } }
+</style>

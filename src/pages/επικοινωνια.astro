@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site } from '../data/site';
+---
+<BaseLayout title="Επικοινωνία" description="Επικοινωνήστε με το Physio Dynamic. Καλέστε 211 750 6000 ή στείλτε μας μήνυμα.">
+  <section class="page-hero">
+    <div class="page-hero-bg" aria-hidden="true"></div>
+    <div class="wrap page-hero-content">
+      <p class="eyebrow">Καλέστε μας</p>
+      <h1>Επικοινωνία</h1>
+      <p class="lede">Μη διστάσετε να επικοινωνήσετε μαζί μας — είμαστε έτοιμοι να σας ακούσουμε.</p>
+    </div>
+  </section>
+
+  <div class="wrap contact-wrap">
+    <div>
+      <h2>Στοιχεία επικοινωνίας</h2>
+      <ul class="contact-list">
+        <li>
+          <strong>Τηλέφωνο</strong>
+          <a href={`tel:00302117506000`}>{site.phones[0]}</a>
+          <a href={`tel:00306936579008`}>{site.phones[1]}</a>
+        </li>
+        <li>
+          <strong>Email</strong>
+          <a href="mailto:kotoulasphysio@gmail.com">kotoulasphysio@gmail.com</a>
+        </li>
+        <li>
+          <strong>Διεύθυνση</strong>
+          <span>{site.addressLine}</span>
+        </li>
+        <li>
+          <strong>Ωράριο</strong>
+          {site.hours.map((h) => (
+            <span>{h.day}: {h.time}</span>
+          ))}
+        </li>
+      </ul>
+
+      <div class="cta-buttons">
+        <a href={site.bookingUrl} target="_blank" rel="noopener" class="btn btn-accent">Κλείσε ραντεβού online</a>
+      </div>
+    </div>
+
+    <div class="form-wrap card">
+      <h2>Στείλτε μας μήνυμα</h2>
+      <ContactForm />
+    </div>
+  </div>
+
+  <div class="map-wrap">
+    <iframe
+      src="https://www.google.com/maps?q=Λ.+Αμφιθέας+103,+Παλαιό+Φάληρο,+17563&output=embed"
+      width="100%"
+      height="400"
+      style="border:0;"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Χάρτης – Λ. Αμφιθέας 103, Παλαιό Φάληρο"
+    ></iframe>
+  </div>
+
+  <section class="section section-alt">
+    <div class="wrap text-center">
+      <h2>Επιλέγοντας το Physio Dynamic</h2>
+      <p class="lede-2">Θα μειώσετε τη διάρκεια θεραπείας σας, πραγματοποιώντας τις λιγότερες δυνατές επισκέψεις. Θα αποτρέψετε τη χρονιότητα της πάθησής σας. Θα γλιτώσετε την ψυχική φθορά και την οικονομική επιβάρυνση από ακατάλληλες θεραπείες και θα γλιτώσετε από άσκοπα χειρουργεία.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { position: relative; color: #fff; padding: 3.5rem 0 3rem; isolation: isolate; overflow: hidden; }
+  .page-hero-bg { position: absolute; inset: 0; z-index: -1;
+    background-image: linear-gradient(135deg, rgba(0,8,127,0.85) 0%, rgba(16,50,124,0.75) 100%), url('/wp-content/uploads/2022/04/GIO_7796.jpg');
+    background-size: cover; background-position: center;
+  }
+  .page-hero-content { position: relative; }
+  .page-hero h1, .page-hero .lede { color: #fff; }
+  .page-hero .eyebrow { color: var(--color-accent); }
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; padding: 3rem 1.25rem; align-items: start; }
+  .contact-list { list-style: none; padding: 0; margin: 1rem 0 2rem; display: grid; gap: 1.25rem; }
+  .contact-list li { display: grid; gap: 0.25rem; padding-left: 1rem; border-left: 3px solid var(--color-accent); }
+  .contact-list strong { color: var(--color-primary); font-family: var(--font-heading); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
+  .cta-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .form-wrap h2 { margin-top: 0; }
+  .map-wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.25rem 3rem; }
+  .map-wrap iframe { border-radius: var(--radius); display: block; }
+  .lede-2 { max-width: 720px; margin: 0 auto; font-size: 1.1rem; }
+  @media (max-width: 900px) { .contact-wrap { grid-template-columns: 1fr; } }
+</style>

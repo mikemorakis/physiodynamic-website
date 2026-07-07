@@ -1,0 +1,24 @@
+# Legacy WordPress URL prefix — remove /υπηρεσιες/ from every service page
+/υπηρεσιες/manual-therapy-δια-χειρός-θεραπεία/ /manual-therapy-δια-χειρός-θεραπεία/ 301
+/υπηρεσιες/βελονισμός/ /βελονισμός/ 301
+/υπηρεσιες/υπηρεσιες-2/ /indiba-activ/ 301
+/υπηρεσιες/shockwave-therapy-κρουστικός-υπέρηχος/ /shockwave-therapy-κρουστικός-υπέρηχος/ 301
+/υπηρεσιες/trigger-points/ /trigger-points/ 301
+/υπηρεσιες/τεχνική-ξηράς-βελόνας/ /τεχνική-ξηράς-βελόνας/ 301
+/υπηρεσιες/θεραπευτική-άσκηση/ /θεραπευτική-άσκηση/ 301
+/υπηρεσιες/otago-exercise-program-πρόγραμμα-άσκησης-για-πρόληψη-της/ /otago-exercise-program-πρόγραμμα-άσκησης-για-πρόληψη-της/ 301
+/υπηρεσιες/kinesio-taping/ /kinesio-taping/ 301
+
+# Services index → home (services grid lives on the homepage)
+/υπηρεσιες / 301
+/υπηρεσιες/ / 301
+
+# Blog aliases
+/blog /category/physiodynamic-blog/ 301
+/blog/ /category/physiodynamic-blog/ 301
+
+# WordPress cruft
+/wp-admin/* / 301
+/wp-login.php / 301
+/feed / 301
+/feed/ / 301

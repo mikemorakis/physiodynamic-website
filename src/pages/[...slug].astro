@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import { servicePages } from '../data/services';
+import { posts } from '../data/posts';
+import { site } from '../data/site';
+
+type Entry =
+  | { type: 'service'; page: (typeof servicePages)[number] }
+  | { type: 'post'; post: (typeof posts)[number] };
+
+export async function getStaticPaths() {
+  const { servicePages: svc } = await import('../data/services');
+  const { posts: p } = await import('../data/posts');
+  return [
+    ...svc.map((page) => ({ params: { slug: page.slug }, props: { type: 'service' as const, page } })),
+    ...p.map((post) => ({ params: { slug: post.slug }, props: { type: 'post' as const, post } })),
+  ];
+}
+
+const props = Astro.props as Entry;
+---
+{props.type === 'service' && (
+  <PageLayout
+    title={props.page.title}
+    description={props.page.description}
+    heroImage={props.page.heroImage}
+    heroAlt={props.page.heroAlt}
+    eyebrow="Υπηρεσία"
+    breadcrumb={[{ label: props.page.title, href: `/${props.page.slug}/` }]}
+  >
+    {props.page.sections.map((section) => (
+      <section class:list={["page-section", section.lead && "lead-section"]}>
+        {section.heading && <h2>{section.heading}</h2>}
+        {section.body && <p>{section.body}</p>}
+        {section.bullets && (
+          <ul>
+            {section.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        )}
+      </section>
+    ))}
+  </PageLayout>
+)}
+
+{props.type === 'post' && (
+  <BaseLayout title={props.post.title} description={props.post.excerpt} ogImage={props.post.heroImage}>
+    <article class="post">
+      <header class="post-hero">
+        <div class="wrap">
+          <nav class="crumbs" aria-label="breadcrumb">
+            <a href="/">Αρχική</a><span>›</span>
+            <a href="/category/physiodynamic-blog/">Blog</a><span>›</span>
+            <span>{props.post.title}</span>
+          </nav>
+          <p class="eyebrow">Blog · {props.post.dateDisplay}</p>
+          <h1>{props.post.title}</h1>
+          {props.post.author && <p class="byline">από {props.post.author}</p>}
+        </div>
+      </header>
+
+      <div class="wrap post-body">
+        {props.post.heroImage && (
+          <figure class="post-figure">
+            <img src={props.post.heroImage} alt={props.post.heroAlt || props.post.title} loading="lazy" />
+          </figure>
+        )}
+        <div class="post-content" set:html={props.post.bodyHtml}></div>
+
+        <div class="post-cta">
+          <p>Χρειάζεστε φυσικοθεραπευτική αξιολόγηση;</p>
+          <a href={site.bookingUrl} target="_blank" rel="noopener" class="btn btn-accent">Κλείσε ραντεβού online</a>
+          <a href={`tel:00302117506000`} class="btn">Καλέστε {site.phoneDisplay}</a>
+        </div>
+
+        <p class="back-link"><a href="/category/physiodynamic-blog/">← Επιστροφή στο blog</a></p>
+      </div>
+    </article>
+  </BaseLayout>
+)}
+
+<style>
+  .page-section { margin-bottom: 1.5rem; }
+  .lead-section p { font-size: 1.15rem; color: var(--color-text); }
+
+  .post-hero { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: #fff; padding: 3rem 0 2.5rem; }
+  .post-hero h1 { color: #fff; }
+  .post-hero .eyebrow { color: var(--color-accent); }
+  .byline { opacity: 0.8; margin: 0; }
+  .crumbs { font-size: 0.85rem; margin-bottom: 1rem; color: rgba(255,255,255,0.7); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .crumbs a { color: rgba(255,255,255,0.85); }
+
+  .post-body { max-width: 780px; padding: 3rem 1.25rem; }
+  .post-figure { margin: 0 0 2rem; }
+  .post-figure img { width: 100%; border-radius: var(--radius); }
+  .post-content :global(h3) { margin-top: 2rem; color: var(--color-primary); }
+  .post-content :global(p) { margin-bottom: 1.15em; line-height: 1.7; }
+  .post-content :global(.source) { color: var(--color-text-muted); font-size: 0.9rem; margin-top: 2rem; }
+
+  .post-cta { margin: 3rem 0 2rem; padding: 1.75rem; background: var(--color-bg-alt); border-radius: var(--radius); text-align: center; }
+  .post-cta p { font-family: var(--font-heading); text-transform: uppercase; font-weight: 700; margin-bottom: 1rem; }
+  .post-cta .btn { margin: 0.25rem; }
+
+  .back-link { margin-top: 2rem; }
+</style>

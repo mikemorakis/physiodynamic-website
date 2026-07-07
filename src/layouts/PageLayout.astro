@@ -1,0 +1,137 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { site } from '../data/site';
+import { heroServices } from '../data/home';
+
+interface Props {
+  title: string;
+  description?: string;
+  heroImage?: string;
+  heroAlt?: string;
+  eyebrow?: string;
+  breadcrumb?: { label: string; href: string }[];
+}
+const { title, description, heroImage, heroAlt, eyebrow = 'Υπηρεσίες', breadcrumb } = Astro.props;
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const otherServices = heroServices.filter((s) => !currentPath.endsWith(`/${s.slug}`));
+---
+<BaseLayout title={title} description={description}>
+  <section class:list={["page-hero", heroImage && "has-image"]}>
+    {heroImage && (
+      <div class="page-hero-bg" aria-hidden="true" style={`background-image: linear-gradient(135deg, rgba(0,8,127,0.82) 0%, rgba(16,50,124,0.65) 100%), url('${heroImage}');`}></div>
+    )}
+    <div class="wrap page-hero-content">
+      {breadcrumb && (
+        <nav class="crumbs" aria-label="breadcrumb">
+          <a href="/">Αρχική</a>
+          {breadcrumb.map((c) => (
+            <><span>›</span><a href={c.href}>{c.label}</a></>
+          ))}
+        </nav>
+      )}
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+    </div>
+  </section>
+
+  <div class="page-body wrap">
+    <article class="page-content">
+      <slot />
+    </article>
+
+    <aside class="page-sidebar">
+      <div class="sidebar-card contact-card">
+        <h3>Κλείστε ραντεβού</h3>
+        <p><strong>Τηλέφωνο</strong><br/>
+          <a href={`tel:00302117506000`}>{site.phones[0]}</a><br/>
+          <a href={`tel:00306936579008`}>{site.phones[1]}</a>
+        </p>
+        <p><strong>Διεύθυνση</strong><br/>{site.addressLine}</p>
+        <p><strong>Ωράριο</strong><br/>Καθημερινές 09:00 – 21:00<br/>Σαββατοκύριακο κλειστά</p>
+        <a href={site.bookingUrl} target="_blank" rel="noopener" class="btn btn-accent" style="width:100%; text-align:center;">Κλείσε ραντεβού online</a>
+      </div>
+
+    </aside>
+  </div>
+
+  <section class="other-services">
+    <div class="wrap">
+      <div class="other-services-head">
+        <p class="eyebrow">Οι υπηρεσίες μας</p>
+        <h2>Δείτε όλες τις υπηρεσίες φυσικοθεραπείας</h2>
+      </div>
+      <div class="other-services-grid">
+        {otherServices.map((s) => (
+          <a href={`/${s.slug}/`} class="mini-service-card">
+            <figure><img src={s.image} alt={s.title} loading="lazy" /></figure>
+            <div class="mini-body">
+              <h3>{s.title}</h3>
+              <span class="mini-more">Περισσότερα →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: #fff;
+    padding: 3.5rem 0 3rem;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .page-hero.has-image { padding: 5rem 0 4.5rem; min-height: 320px; display: flex; align-items: center; }
+  .page-hero-bg { position: absolute; inset: 0; z-index: -1; background-size: cover; background-position: center; }
+  .page-hero-content { position: relative; }
+  .page-hero h1 { color: #fff; }
+  .page-hero .eyebrow { color: var(--color-accent); }
+  .crumbs { font-size: 0.85rem; margin-bottom: 1rem; color: rgba(255,255,255,0.7); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .crumbs a { color: rgba(255,255,255,0.85); }
+  .crumbs a:hover { color: var(--color-accent); }
+
+  .page-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    align-items: start;
+  }
+  .page-content :global(h2) { margin-top: 2rem; }
+  .page-content :global(h3) { margin-top: 1.5rem; color: var(--color-primary); }
+  .page-content :global(ul) { padding-left: 1.25rem; margin-bottom: 1em; }
+  .page-content :global(li) { margin-bottom: 0.35rem; }
+  .page-content :global(strong) { color: var(--color-primary); }
+
+  .page-sidebar { position: sticky; top: 120px; display: grid; gap: 1.25rem; }
+  .sidebar-card { background: var(--color-bg-alt); border-radius: var(--radius); padding: 1.5rem; }
+  .sidebar-card h3 { font-size: 1.1rem; margin-top: 0; }
+  .contact-card { background: var(--color-primary); color: #fff; }
+  .contact-card h3, .contact-card strong { color: var(--color-accent); }
+  .contact-card a { color: #fff; }
+  .contact-card a:hover { color: var(--color-accent); }
+  .contact-card p { margin-bottom: 1rem; }
+  .contact-card .btn { margin-top: 0.5rem; }
+
+  @media (max-width: 900px) {
+    .page-body { grid-template-columns: 1fr; }
+    .page-sidebar { position: static; }
+  }
+
+  .other-services { background: var(--color-bg-alt); padding: 4rem 0; margin-top: 2rem; position: relative; z-index: 1; }
+  .other-services-head { text-align: center; margin-bottom: 2.5rem; }
+  .other-services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+  .mini-service-card { display: flex; flex-direction: column; background: #fff; border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; border: 1px solid var(--color-border); transition: transform 0.2s, box-shadow 0.2s; }
+  .mini-service-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(16,50,124,0.1); }
+  .mini-service-card figure { margin: 0; aspect-ratio: 4/3; overflow: hidden; background: var(--color-bg-alt); }
+  .mini-service-card figure img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+  .mini-service-card:hover figure img { transform: scale(1.05); }
+  .mini-body { padding: 1rem 1.15rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
+  .mini-service-card h3 { color: var(--color-primary); font-size: 0.95rem; margin: 0 0 0.5rem; line-height: 1.25; }
+  .mini-more { color: var(--color-primary); font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; margin-top: auto; }
+</style>

@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { posts } from '../../data/posts';
+
+const sorted = [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+---
+<BaseLayout title="Physio Dynamic Blog" description="Άρθρα και νέα από το Physio Dynamic — φυσικοθεραπεία, αποκατάσταση, διατροφή και υγεία.">
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Νέα & άρθρα</p>
+      <h1>Physio Dynamic Blog</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="grid grid-2 posts">
+        {sorted.map((post) => (
+          <a href={`/${post.slug}/`} class="card post-card">
+            {post.heroImage && (
+              <figure><img src={post.heroImage} alt={post.heroAlt || post.title} loading="lazy" /></figure>
+            )}
+            <div class="body">
+              <time>{post.dateDisplay}</time>
+              <h2>{post.title}</h2>
+              <p>{post.excerpt}</p>
+              <span class="more">Διαβάστε περισσότερα →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: #fff; padding: 3rem 0 2.5rem; }
+  .page-hero h1 { color: #fff; }
+  .page-hero .eyebrow { color: var(--color-accent); }
+  .post-card { padding: 0; overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+  .post-card figure { margin: 0; aspect-ratio: 16/9; overflow: hidden; }
+  .post-card figure img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  .post-card:hover figure img { transform: scale(1.05); }
+  .post-card .body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .post-card time { font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .post-card h2 { font-size: 1.25rem; margin: 0.5rem 0 0.75rem; }
+  .post-card p { flex: 1; color: var(--color-text-muted); }
+  .post-card .more { color: var(--color-primary); font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-top: 0.75rem; }
+</style>
