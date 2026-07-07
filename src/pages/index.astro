@@ -128,8 +128,10 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
             <div class="service-image">
               <img src={s.image} alt={s.title} loading="lazy" />
             </div>
-            <div class="service-icon" aria-hidden="true">
-              <ServiceIcon type={s.icon} />
+            <div class="service-icon-row" aria-hidden="true">
+              <div class="service-icon">
+                <ServiceIcon type={s.icon} />
+              </div>
             </div>
             <div class="service-content">
               <h3>{s.title}</h3>
@@ -511,10 +513,13 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
   .service-card:hover .service-image img {
     transform: scale(1.06);
   }
+  .service-icon-row {
+    padding-left: 20px;
+    margin-top: -24px;
+    position: relative;
+    z-index: 10;
+  }
   .service-icon {
-    position: absolute;
-    top: -22px;
-    left: 20px;
     width: 48px;
     height: 48px;
     background: #fff;
@@ -523,9 +528,7 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
     align-items: center;
     justify-content: center;
     color: var(--color-primary);
-    z-index: 20;
     box-shadow: 0 2px 10px rgba(16, 50, 124, 0.12);
-    flex-shrink: 0;
   }
   .service-icon svg {
     width: 26px;
