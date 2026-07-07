@@ -491,6 +491,7 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
     border-radius: 12px;
     transition: transform 0.2s, box-shadow 0.2s;
     position: relative;
+    padding-top: 30px;
   }
   .service-card:hover {
     transform: translateY(-4px);
@@ -514,26 +515,28 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
   }
   .service-icon {
     position: absolute;
-    top: 80px;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background: var(--color-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-accent);
-    z-index: 10;
-    box-shadow: 0 4px 12px rgba(16, 50, 124, 0.2);
+    z-index: 20;
+    box-shadow: 0 6px 16px rgba(16, 50, 124, 0.25);
+    flex-shrink: 0;
   }
   .service-icon svg {
-    width: 32px;
-    height: 32px;
+    width: 38px;
+    height: 38px;
+    stroke-width: 1.5;
   }
   .service-content {
-    padding: 3.5rem 1.5rem 1.75rem;
+    padding: 2.5rem 1.5rem 1.75rem;
     display: flex;
     flex-direction: column;
     flex: 1;
