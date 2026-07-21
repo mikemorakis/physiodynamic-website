@@ -177,11 +177,16 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
       <div class="grid grid-3">
         {testimonials.map((t) => (
           <div class="card testimonial">
-            <div class="testimonial-stars">
-              {Array.from({length: t.rating}).map(() => <span>★</span>)}
+            <div class="testimonial-header">
+              <img src={t.image} alt={t.name} class="testimonial-avatar" />
+              <div class="testimonial-info">
+                <cite>{t.name}</cite>
+                <div class="testimonial-stars">
+                  {Array.from({length: t.rating}).map(() => <span>★</span>)}
+                </div>
+              </div>
             </div>
             <p>&ldquo;{t.text}&rdquo;</p>
-            <cite>{t.name}</cite>
           </div>
         ))}
       </div>
@@ -620,6 +625,29 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
     flex-direction: column;
     padding: 2rem 1.5rem;
     line-height: 1.7;
+  }
+  .testimonial-header {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--color-bg-alt);
+  }
+  .testimonial-info {
+    flex: 1;
+  }
+  .testimonial-info cite {
+    display: block;
+    font-style: normal;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
   }
   .testimonial-stars {
     display: flex;
