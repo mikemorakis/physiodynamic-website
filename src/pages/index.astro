@@ -38,8 +38,8 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
       playsinline
       preload="auto"
       poster="/wp-content/uploads/2022/04/GIO_7728.jpg"
-      disablepictureinpicture
-      disableremoteplayback
+      disablePictureInPicture
+      disableRemotePlayback
       data-hero-video
     >
       <source src="/hero.mp4" type="video/mp4" />
@@ -664,9 +664,36 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
   .contact-info li { margin-bottom: 0.5rem; }
   @media (max-width: 800px) { .contact-grid { grid-template-columns: 1fr; } }
 
-  /* Section backgrounds */
-  .section-testimonials { background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%); }
-  .section-faq { background: #fafbfc; }
-  .section-partners { background: linear-gradient(135deg, #fffbf0 0%, #fff9f5 100%); }
+  /* Section backgrounds - classic with pattern and glow */
+  .section-testimonials {
+    background: #fff;
+    background-image:
+      radial-gradient(ellipse 60% 55% at 50% 45%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0) 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'><g fill='none' stroke='%2310327c' stroke-width='1' stroke-opacity='0.08'><polygon points='28,0 56,16 56,50 28,66 0,50 0,16'/><polygon points='28,66 56,82 56,116 28,132 0,116 0,82'/></g></svg>");
+    background-attachment: fixed, fixed;
+    background-repeat: no-repeat, repeat;
+    background-position: center center, 0 0;
+    position: relative;
+  }
+  .section-faq {
+    background: #fff;
+    background-image:
+      radial-gradient(ellipse 60% 55% at 50% 45%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0) 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'><g fill='none' stroke='%2310327c' stroke-width='1' stroke-opacity='0.08'><polygon points='28,0 56,16 56,50 28,66 0,50 0,16'/><polygon points='28,66 56,82 56,116 28,132 0,116 0,82'/></g></svg>");
+    background-attachment: fixed, fixed;
+    background-repeat: no-repeat, repeat;
+    background-position: center center, 0 0;
+    position: relative;
+  }
+  .section-partners {
+    background: #fff;
+    background-image:
+      radial-gradient(ellipse 60% 55% at 50% 45%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0) 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'><g fill='none' stroke='%2310327c' stroke-width='1' stroke-opacity='0.08'><polygon points='28,0 56,16 56,50 28,66 0,50 0,16'/><polygon points='28,66 56,82 56,116 28,132 0,116 0,82'/></g></svg>");
+    background-attachment: fixed, fixed;
+    background-repeat: no-repeat, repeat;
+    background-position: center center, 0 0;
+    position: relative;
+  }
 </style>
 /* Cache buster: 1783419071 */
