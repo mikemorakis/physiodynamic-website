@@ -31,7 +31,7 @@ export const heroServices = [
     title: 'McKenzie Θεραπεία',
     body: 'Xρησιμοποιείται ευρέως σε ασθενείς με οσφυαλγία ή αλλες παθήσεις και φέρει αξιοσημείωτα και άμεσα αποτελέσματα. Οδηγεί σε ανακούφιση πόνου από την πρώτη κιόλας ημέρα εφαρμογής.',
     image: '/wp-content/uploads/2025/03/high-angle-male-osteopathic-therapist-checking-female-patient-s-lower-back-spine-scaled.jpg',
-    icon: 'spine',
+    icon: 'adjustments-vertical',
     benefits: ['Ανακούφιση πόνου', 'Σωστή αξιολόγηση', 'Εξατομικευμένη καθοδήγηση'],
   },
   {
@@ -39,7 +39,7 @@ export const heroServices = [
     title: 'Αθλητικοί Τραυματισμοί',
     body: 'Πολύ συχνό φαινόμενο για άτομα τα οποία αθλούνται είτε βρίσκονται σε ερασιτεχνικό είτε σε επαγγελματικό επίπεδο. Το κέντρο μας διαθέτει εξειδικευμένους αθλητικούς φυσικοθεραπευτές με πιστοποίηση από την APA.',
     image: '/wp-content/uploads/2025/03/sporty-woman-stretching-stadium-track-scaled.jpg',
-    icon: 'athlete',
+    icon: 'fire',
     benefits: ['Αξιολόγηση κίνησης', 'Πρόγραμμα αποκατάστασης', 'Ασφαλής επανένταξη'],
   },
   {
@@ -47,7 +47,7 @@ export const heroServices = [
     title: "Φυσικοθεραπεία Κατ' Οίκον",
     body: 'Για ασθενείς που αντιμετωπίζουν προβλήματα μετακίνησης το φυσικοθεραπευτήριο προσφέρει υπηρεσίες αξιολόγησης και δημιουργίας εξατομικευμένου θεραπευτικού προγράμματος στον χώρο σας.',
     image: '/wp-content/uploads/2023/01/home-physiotheraphy.jpg',
-    icon: 'home',
+    icon: 'home-modern',
     benefits: ['Άνεση στον χώρο σας', 'Εξατομικευμένο πλάνο', 'Υποστήριξη μετακίνησης'],
   },
   {
@@ -55,7 +55,7 @@ export const heroServices = [
     title: 'Manual Therapy',
     body: 'Προκειμένου να αντιμετωπιστούν οι νευρομυοσκελετικές παθήσεις παγκοσμίως χρησιμοποιείται η διά χειρός θεραπεία.',
     image: '/wp-content/uploads/2022/04/GIO_7551-e1649323576656.jpg',
-    icon: 'hands',
+    icon: 'hand-thumb-up',
     benefits: ['Χειροπειά θεραπεία', 'Μυική χαλάρωση', 'Αποκατάσταση κίνησης'],
   },
   {
@@ -63,7 +63,7 @@ export const heroServices = [
     title: 'Βελονισμός',
     body: 'Η αποτελεσματικότητα του Βελονισμού σύμφωνα με τη Δυτική Ιατρική βασίζεται στην απελευθέρωση ενδογενών οπιοειδών μέσω αισθητικών ινών.',
     image: '/wp-content/uploads/2022/04/GIO_7611-e1649323151492.jpg',
-    icon: 'needle',
+    icon: 'sparkles',
     benefits: ['Μείωση πόνου', 'Χαλάρωση μυών', 'Φυσική θεραπεία'],
   },
   {
@@ -71,7 +71,7 @@ export const heroServices = [
     title: 'Indiba Activ',
     body: 'To Indiba Activ ερχόμενο από την Ισπανία αποτελεί την καινοτομία στο κομμάτι της Αθλητικής και Μυοσκελετικής Αποκατάστασης.',
     image: '/wp-content/uploads/2022/04/GIO_7508.jpg',
-    icon: 'device',
+    icon: 'bolt',
     benefits: ['Σύγχρονη τεχνολογία', 'Μυοσκελετική αποκατάσταση', 'Ταχεία θεραπεία'],
   },
   {
@@ -79,7 +79,7 @@ export const heroServices = [
     title: 'Shockwave Therapy',
     body: 'Η Εξωσωματική Θεραπεία με Ωστικά κύματα αποτελεί μια προηγμένη και αποτελεσματική θεραπεία στη μυοσκελετική και ορθοπεδική αποκατάσταση.',
     image: '/wp-content/uploads/2022/04/shockwave-therapy-e1650976652147.jpg',
-    icon: 'wave',
+    icon: 'exclamation-circle',
     benefits: ['Επεμβατική θεραπεία', 'Ορθοπεδική αποκατάσταση', 'Αποτελεσματική'],
   },
   {
@@ -87,7 +87,7 @@ export const heroServices = [
     title: 'Trigger Points',
     body: 'Τα Trigger Points είναι τα διακριτά, ευερέθιστα σημεία, τα οποία κατά την ψηλάφηση θυμίζουν κόμπο ή σφιχτή ταινία ενός μυ.',
     image: '/wp-content/uploads/2022/04/GIO_7532.jpg',
-    icon: 'target',
+    icon: 'map-pin',
     benefits: ['Στοχευμένη θεραπεία', 'Μυική ένταση', 'Ανακούφιση'],
   },
   {
@@ -95,7 +95,7 @@ export const heroServices = [
     title: 'Ξηρά Βελόνα',
     body: 'Η τεχνική της ξηράς βελόνας αποτελεί μια ξεχωριστή μέθοδο. Σκοπό έχει να μειώσει τα συμπτώματα πόνου που οφείλονται στους μύες.',
     image: '/wp-content/uploads/2022/04/GIO_7630-e1649324333805.jpg',
-    icon: 'needle',
+    icon: 'pencil-square',
     benefits: ['Μυοπεριτονιακό σύνδρομο', 'Μείωση πόνου', 'Αποτελεσματική'],
   },
   {
@@ -103,7 +103,7 @@ export const heroServices = [
     title: 'Θεραπευτική Άσκηση',
     body: 'Η θεραπευτική άσκηση αποτελεί το πιο τεκμηριωμένο μέσο αντιμετώπισης μυοσκελετικών, ορθοπεδικών και αθλητικών τραυματισμών.',
     image: '/wp-content/uploads/2022/04/GIO_7737-e1650976492528.jpg',
-    icon: 'movement',
+    icon: 'heart',
     benefits: ['Δύναμη μυών', 'Ευελιξία', 'Ισορροπία'],
   },
   {
@@ -111,7 +111,7 @@ export const heroServices = [
     title: 'Otago Exercise Program',
     body: 'Μια ευρέως διαδεδομένη και επιστημονικά τεκμηριωμένη πρακτική για την πρόληψη των πτώσεων στην τρίτη ηλικία.',
     image: '/wp-content/uploads/2022/04/GIO_7720-e1650976440225.jpg',
-    icon: 'movement',
+    icon: 'shield-check',
     benefits: ['Πρόληψη πτώσεων', 'Δύναμη ποδιών', 'Ασφάλεια'],
   },
   {
@@ -119,7 +119,7 @@ export const heroServices = [
     title: 'Kinesio Taping',
     body: 'Τεχνική απόστασης που στοχεύει στη διευκόλυνση της φυσικής διαδικασίας επούλωσης παρέχοντας υποστήριξη και σταθερότητα.',
     image: '/wp-content/uploads/2022/04/taping-260-1-1200x658-1.jpg',
-    icon: 'device',
+    icon: 'square-2-stack',
     benefits: ['Υποστήριξη αρθρώσεων', 'Διατήρηση κίνησης', 'Μυική σταθερότητα'],
   },
   {
@@ -127,7 +127,7 @@ export const heroServices = [
     title: 'Pilates',
     body: 'Η μέθοδος Pilates είναι μια μορφή άσκησης που γυμνάζει το σώμα με ασφάλεια με βελτίωση ευλυγισίας και ισορροπίας.',
     image: '/wp-content/uploads/2023/01/pilates.jpg',
-    icon: 'movement',
+    icon: 'circle-stack',
     benefits: ['Ευλυγισία', 'Ισορροπία', 'Δύναμη'],
   },
   {
@@ -135,7 +135,7 @@ export const heroServices = [
     title: 'Ορθωτικά Πέλματα',
     body: 'Διαθέτουμε εμπεριστατωμένη γνώση στο σχεδιασμό και διαμόρφωση ορθωτικού πέλματος που μας διαφοροποιεί.',
     image: '/wp-content/uploads/2023/01/feet-physiotheraphy.jpg',
-    icon: 'device',
+    icon: 'wrench',
     benefits: ['Προσαρμοσμένα πέλματα', 'Άνεση', 'Στήριξη ποδιών'],
   },
   {
@@ -143,7 +143,7 @@ export const heroServices = [
     title: 'FMS - Μαγνητική Διέγερση',
     body: 'Μη επεμβατική θεραπεία τελευταίας τεχνολογίας για μυοσκελετικές παθήσεις και παθήσεις του πυελικού εδάφους.',
     image: '/wp-content/uploads/2022/04/GIO_7448.jpg',
-    icon: 'wave',
+    icon: 'cpu-chip',
     benefits: ['Μη επεμβατική', 'Τελευταία τεχνολογία', 'Αποτελεσματική'],
   },
 ];

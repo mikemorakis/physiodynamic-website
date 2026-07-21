@@ -1,14 +1,20 @@
 ---
 // Import actual Heroicons from the heroicons package
-import spineIcon from 'heroicons/24/outline/wrench.svg?raw';
-import athleteIcon from 'heroicons/24/outline/arrow-trending-up.svg?raw';
-import homeIcon from 'heroicons/24/outline/home-modern.svg?raw';
-import handsIcon from 'heroicons/24/outline/hand-thumb-up.svg?raw';
-import needleIcon from 'heroicons/24/outline/sparkles.svg?raw';
-import deviceIcon from 'heroicons/24/outline/computer-desktop.svg?raw';
-import waveIcon from 'heroicons/24/outline/radio.svg?raw';
-import targetIcon from 'heroicons/24/outline/trophy.svg?raw';
-import movementIcon from 'heroicons/24/outline/arrow-path.svg?raw';
+import adjustmentsVerticalIcon from 'heroicons/24/outline/adjustments-vertical.svg?raw';
+import fireIcon from 'heroicons/24/outline/fire.svg?raw';
+import homeModernIcon from 'heroicons/24/outline/home-modern.svg?raw';
+import handThumbUpIcon from 'heroicons/24/outline/hand-thumb-up.svg?raw';
+import sparklesIcon from 'heroicons/24/outline/sparkles.svg?raw';
+import boltIcon from 'heroicons/24/outline/bolt.svg?raw';
+import exclamationCircleIcon from 'heroicons/24/outline/exclamation-circle.svg?raw';
+import mapPinIcon from 'heroicons/24/outline/map-pin.svg?raw';
+import pencilSquareIcon from 'heroicons/24/outline/pencil-square.svg?raw';
+import heartIcon from 'heroicons/24/outline/heart.svg?raw';
+import shieldCheckIcon from 'heroicons/24/outline/shield-check.svg?raw';
+import square2StackIcon from 'heroicons/24/outline/square-2-stack.svg?raw';
+import circleStackIcon from 'heroicons/24/outline/circle-stack.svg?raw';
+import wrenchIcon from 'heroicons/24/outline/wrench.svg?raw';
+import cpuChipIcon from 'heroicons/24/outline/cpu-chip.svg?raw';
 
 interface Props {
   type: string;
@@ -17,18 +23,24 @@ interface Props {
 const { type } = Astro.props;
 
 const iconMap: Record<string, string> = {
-  spine: spineIcon,
-  athlete: athleteIcon,
-  home: homeIcon,
-  hands: handsIcon,
-  needle: needleIcon,
-  device: deviceIcon,
-  wave: waveIcon,
-  target: targetIcon,
-  movement: movementIcon,
+  'adjustments-vertical': adjustmentsVerticalIcon,
+  'fire': fireIcon,
+  'home-modern': homeModernIcon,
+  'hand-thumb-up': handThumbUpIcon,
+  'sparkles': sparklesIcon,
+  'bolt': boltIcon,
+  'exclamation-circle': exclamationCircleIcon,
+  'map-pin': mapPinIcon,
+  'pencil-square': pencilSquareIcon,
+  'heart': heartIcon,
+  'shield-check': shieldCheckIcon,
+  'square-2-stack': square2StackIcon,
+  'circle-stack': circleStackIcon,
+  'wrench': wrenchIcon,
+  'cpu-chip': cpuChipIcon,
 };
 
-const svgContent = iconMap[type] || iconMap.device;
+const svgContent = iconMap[type] || iconMap['bolt'];
 ---
 
 <Fragment set:html={svgContent} />
