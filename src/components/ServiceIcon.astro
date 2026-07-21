@@ -1,4 +1,20 @@
 ---
+import mckenzieIcon from '../../public/icons/physio/mckenzie.svg?raw';
+import athleteIcon from '../../public/icons/physio/athlete.svg?raw';
+import homeIcon from '../../public/icons/physio/home.svg?raw';
+import handsIcon from '../../public/icons/physio/hands.svg?raw';
+import acupunctureIcon from '../../public/icons/physio/acupuncture.svg?raw';
+import energyIcon from '../../public/icons/physio/energy.svg?raw';
+import wavesIcon from '../../public/icons/physio/waves.svg?raw';
+import triggerIcon from '../../public/icons/physio/trigger.svg?raw';
+import needleIcon from '../../public/icons/physio/needle.svg?raw';
+import exerciseIcon from '../../public/icons/physio/exercise.svg?raw';
+import shieldIcon from '../../public/icons/physio/shield.svg?raw';
+import tapeIcon from '../../public/icons/physio/tape.svg?raw';
+import pilatesIcon from '../../public/icons/physio/pilates.svg?raw';
+import footIcon from '../../public/icons/physio/foot.svg?raw';
+import magnetIcon from '../../public/icons/physio/magnet.svg?raw';
+
 interface Props {
   type: string;
 }
@@ -6,33 +22,32 @@ interface Props {
 const { type } = Astro.props;
 
 const iconMap: Record<string, string> = {
-  'adjustments-vertical': '/icons/physio/mckenzie.svg',
-  'fire': '/icons/physio/athlete.svg',
-  'home-modern': '/icons/physio/home.svg',
-  'hand-thumb-up': '/icons/physio/hands.svg',
-  'sparkles': '/icons/physio/acupuncture.svg',
-  'bolt': '/icons/physio/energy.svg',
-  'exclamation-circle': '/icons/physio/waves.svg',
-  'map-pin': '/icons/physio/trigger.svg',
-  'pencil-square': '/icons/physio/needle.svg',
-  'heart': '/icons/physio/exercise.svg',
-  'shield-check': '/icons/physio/shield.svg',
-  'square-2-stack': '/icons/physio/tape.svg',
-  'circle-stack': '/icons/physio/pilates.svg',
-  'wrench': '/icons/physio/foot.svg',
-  'cpu-chip': '/icons/physio/magnet.svg',
+  'adjustments-vertical': mckenzieIcon,
+  'fire': athleteIcon,
+  'home-modern': homeIcon,
+  'hand-thumb-up': handsIcon,
+  'sparkles': acupunctureIcon,
+  'bolt': energyIcon,
+  'exclamation-circle': wavesIcon,
+  'map-pin': triggerIcon,
+  'pencil-square': needleIcon,
+  'heart': exerciseIcon,
+  'shield-check': shieldIcon,
+  'square-2-stack': tapeIcon,
+  'circle-stack': pilatesIcon,
+  'wrench': footIcon,
+  'cpu-chip': magnetIcon,
 };
 
-const iconPath = iconMap[type] || iconMap['bolt'];
+const svgContent = iconMap[type] || iconMap['bolt'];
 ---
 
-<img src={iconPath} alt="Service icon" class="service-icon-img" />
+<Fragment set:html={svgContent} />
 
 <style>
-  .service-icon-img {
+  :global(svg) {
     width: 100%;
     height: 100%;
-    object-fit: contain;
     color: var(--color-primary);
   }
 </style>
