@@ -1,6 +1,4 @@
 ---
-import { Icon } from 'astro-icon/components';
-
 interface Props {
   type: string;
 }
@@ -8,21 +6,21 @@ interface Props {
 const { type } = Astro.props;
 
 const iconMap: Record<string, string> = {
-  spine: 'heroicons:spine',
-  athlete: 'heroicons:user-running',
-  home: 'heroicons:home',
-  hands: 'heroicons:hand-raised',
-  needle: 'heroicons:beaker',
-  device: 'heroicons:computer-desktop',
-  wave: 'heroicons:bolt',
-  target: 'heroicons:target',
-  movement: 'heroicons:arrow-trending-up',
+  spine: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M8 9h8M8 15h8M10 5a2 2 0 11 4 0 2 2 0 01-4 0z"/></svg>',
+  athlete: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8c0-1.105.895-2 2-2s2 .895 2 2-.895 2-2 2-2-.895-2-2zM9 12c0-.55.224-1.048.586-1.414L13 7m0 10l3 3m-9 0h6"/></svg>',
+  home: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+  hands: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9v6a2 2 0 002 2h8a2 2 0 002-2V9M9 5a2 2 0 012-2h2a2 2 0 012 2v0a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>',
+  needle: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2h5v7h5l-7.5 9-7.5-9h5V2z"/></svg>',
+  device: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>',
+  wave: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2l.5 1M17 6l1 2M20 13v5M12 22l-4-6M7 13V8M4 9l1-2"/><path d="M6 5c1.5 1.5 3 2 4.5 4s1.5 4 3 6"/></svg>',
+  target: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+  movement: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8 10 1 17"/><polyline points="17 6 23 6 23 12"/></svg>',
 };
 
-const iconName = iconMap[type] || iconMap.device;
+const svgContent = iconMap[type] || iconMap.device;
 ---
 
-<Icon name={iconName} />
+<Fragment set:html={svgContent} />
 
 <style>
   :global(svg) {
