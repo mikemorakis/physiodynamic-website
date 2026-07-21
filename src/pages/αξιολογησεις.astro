@@ -17,8 +17,13 @@ import { testimonials } from '../data/home';
       <div class="reviews-grid">
         {testimonials.map((t) => (
           <div class="review-card">
-            <div class="review-stars">
-              {Array.from({length: t.rating}).map(() => <span>★</span>)}
+            <div class="review-header">
+              <div class="review-stars">
+                {Array.from({length: t.rating}).map(() => <span>★</span>)}
+              </div>
+              <a href="https://g.page/physio-dynamic/review" target="_blank" class="google-link" title="View on Google">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12.545 10.239v3.821h5.445c-0.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032 0-3.331 2.701-6.032 6.032-6.032 1.498 0 2.866 0.549 3.921 1.453l2.814-2.814c-1.733-1.605-4.069-2.586-6.735-2.586-5.531 0-10.016 4.485-10.016 10.016s4.485 10.016 10.016 10.016c5.531 0 10.016-4.485 10.016-10.016 0-0.677-0.074-1.338-0.213-1.975h-9.803z"/></svg>
+              </a>
             </div>
             <p class="review-text">&ldquo;{t.text}&rdquo;</p>
             <p class="review-author">{t.name}</p>
@@ -46,8 +51,18 @@ import { testimonials } from '../data/home';
   <section class="section section-alt">
     <div class="wrap">
       <div class="text-center">
+        <h2>Δείτε όλες τις αξιολογήσεις στο Google</h2>
+        <p class="lede-2" style="max-width: 600px; margin: 1rem auto 0;">Περισσότερες αξιολογήσεις και λεπτομέρειες διαθέσιμες στο Google Business Profile</p>
+        <a href="https://g.page/physio-dynamic" target="_blank" class="btn btn-accent" style="margin-top: 1.5rem;">Δείτε στο Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="text-center">
         <h2>Έχετε ήδη επισκεφτεί μας;</h2>
-        <p class="lede-2" style="max-width: 600px; margin: 1rem auto 0;">Μοιραστείτε την εμπειρία σας με άλλους ασθενείς</p>
+        <p class="lede-2" style="max-width: 600px; margin: 1rem auto 0;">Μοιραστείτε την εμπειρία σας με άλλους ασθενείς και βοηθήστε μας να βελτιωνόμαστε</p>
         <a href="https://g.page/physio-dynamic/review" target="_blank" class="btn btn-accent" style="margin-top: 1.5rem;">Αφήστε Αξιολόγηση στο Google</a>
       </div>
     </div>
@@ -70,11 +85,32 @@ import { testimonials } from '../data/home';
     display: flex;
     flex-direction: column;
     transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
   }
 
   .review-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 30px rgba(16, 50, 124, 0.08);
+  }
+
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .google-link {
+    color: var(--color-primary);
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .google-link:hover {
+    opacity: 1;
   }
 
   .review-stars {
