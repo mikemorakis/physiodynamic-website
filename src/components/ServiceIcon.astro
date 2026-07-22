@@ -1,20 +1,7 @@
 ---
-import mckenzieIcon from '../../public/icons/physio/mckenzie.svg?raw';
-import athleteIcon from '../../public/icons/physio/athlete.svg?raw';
-import homeIcon from '../../public/icons/physio/home.svg?raw';
-import handsIcon from '../../public/icons/physio/hands.svg?raw';
-import acupunctureIcon from '../../public/icons/physio/acupuncture.svg?raw';
-import energyIcon from '../../public/icons/physio/energy.svg?raw';
-import wavesIcon from '../../public/icons/physio/waves.svg?raw';
-import triggerIcon from '../../public/icons/physio/trigger.svg?raw';
-import needleIcon from '../../public/icons/physio/needle.svg?raw';
-import exerciseIcon from '../../public/icons/physio/exercise.svg?raw';
-import shieldIcon from '../../public/icons/physio/shield.svg?raw';
-import tapeIcon from '../../public/icons/physio/tape.svg?raw';
-import pilatesIcon from '../../public/icons/physio/pilates.svg?raw';
-import footIcon from '../../public/icons/physio/foot.svg?raw';
-import magnetIcon from '../../public/icons/physio/magnet.svg?raw';
-
+// Service icons — Flaticon "Physiotherapy" packs (lineal style).
+// Icons by Magnific & Umeicon from www.flaticon.com (free license with attribution — see footer credit).
+// PNGs live in /public/icons/physio/ and are tinted via CSS mask so they follow --color-primary.
 interface Props {
   type: string;
 }
@@ -22,32 +9,42 @@ interface Props {
 const { type } = Astro.props;
 
 const iconMap: Record<string, string> = {
-  'adjustments-vertical': mckenzieIcon,
-  'fire': athleteIcon,
-  'home-modern': homeIcon,
-  'hand-thumb-up': handsIcon,
-  'sparkles': acupunctureIcon,
-  'bolt': energyIcon,
-  'exclamation-circle': wavesIcon,
-  'map-pin': triggerIcon,
-  'pencil-square': needleIcon,
-  'heart': exerciseIcon,
-  'shield-check': shieldIcon,
-  'square-2-stack': tapeIcon,
-  'circle-stack': pilatesIcon,
-  'wrench': footIcon,
-  'cpu-chip': magnetIcon,
+  'adjustments-vertical': 'mckenzie',    // Flaticon 414332 — spine (McKenzie)
+  'fire': 'athlete',                     // Flaticon 469451 — knee joint injury
+  'home-modern': 'home',                 // Flaticon 6454118 — home care
+  'hand-thumb-up': 'hands',              // Flaticon 414336 — hand (manual therapy)
+  'sparkles': 'acupuncture',             // Flaticon 414359 — acupuncture needles
+  'bolt': 'energy',                      // Flaticon 469462 — radiofrequency device (Indiba)
+  'exclamation-circle': 'waves',         // Flaticon 414329 — shockwave/ultrasound
+  'map-pin': 'trigger',                  // Flaticon 414358 — massage ball (trigger points)
+  'pencil-square': 'needle',             // Flaticon 414319 — dry needling
+  'heart': 'exercise',                   // Flaticon 414342 — dumbbells
+  'shield-check': 'shield',              // Flaticon 414317 — assisted walking (Otago)
+  'square-2-stack': 'tape',              // Flaticon 8281249 — kinesio tape roll
+  'circle-stack': 'pilates',             // Flaticon 414322 — exercise ball
+  'wrench': 'foot',                      // Flaticon 414360 — insoles
+  'cpu-chip': 'magnet',                  // Flaticon 414361 — electrotherapy device (FMS)
 };
 
-const svgContent = iconMap[type] || iconMap['bolt'];
+const name = iconMap[type] || iconMap['bolt'];
+const src = `/icons/physio/${name}.png`;
 ---
 
-<Fragment set:html={svgContent} />
+<span class="physio-icon" style={`--icon-url: url('${src}')`} role="img" aria-hidden="true"></span>
 
 <style>
-  :global(svg) {
+  .physio-icon {
+    display: block;
     width: 100%;
     height: 100%;
-    color: var(--color-primary);
+    background-color: var(--color-primary);
+    -webkit-mask-image: var(--icon-url);
+    mask-image: var(--icon-url);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: 62%;
+    mask-size: 62%;
   }
 </style>
