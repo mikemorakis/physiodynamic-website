@@ -9,7 +9,7 @@
     "build": "astro build && pagefind --site dist",
     "preview": "wrangler pages dev dist",
     "astro": "astro",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=physiodynamic"
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=physiodynamic --branch=main"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",
