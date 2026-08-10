@@ -1,0 +1,222 @@
+---
+// Custom GDPR cookie consent — wired to Google Consent Mode v2.
+// Branding: Symbols House of Brands. Replaces the third-party CookieYes widget.
+---
+<div class="cc" data-cc hidden>
+  <!-- Banner -->
+  <div class="cc-banner" data-cc-banner role="dialog" aria-live="polite" aria-label="Ειδοποίηση cookies">
+    <div class="cc-banner-body">
+      <p class="cc-title">Χρησιμοποιούμε cookies 🍪</p>
+      <p class="cc-text">
+        Χρησιμοποιούμε cookies για τη σωστή λειτουργία του ιστότοπου, καθώς και —με τη
+        συγκατάθεσή σας— για στατιστικά ανάλυσης και για διαφημιστικούς σκοπούς. Μπορείτε να
+        αποδεχθείτε όλα, να τα απορρίψετε ή να επιλέξετε ρυθμίσεις. Δείτε την
+        <a href="/επικοινωνια/">Πολιτική Απορρήτου</a>.
+      </p>
+    </div>
+    <div class="cc-actions">
+      <button type="button" class="cc-btn cc-ghost" data-cc-settings>Ρυθμίσεις</button>
+      <button type="button" class="cc-btn cc-ghost" data-cc-reject>Απόρριψη</button>
+      <button type="button" class="cc-btn cc-primary" data-cc-accept>Αποδοχή όλων</button>
+    </div>
+    <p class="cc-powered">Consent management powered by <a href="https://www.symbols.gr/" target="_blank" rel="noopener">Symbols House of Brands</a></p>
+  </div>
+
+  <!-- Preferences modal -->
+  <div class="cc-modal" data-cc-modal hidden>
+    <div class="cc-modal-backdrop" data-cc-close></div>
+    <div class="cc-modal-card" role="dialog" aria-modal="true" aria-labelledby="cc-modal-title">
+      <div class="cc-modal-head">
+        <h2 id="cc-modal-title">Ρυθμίσεις cookies</h2>
+        <button type="button" class="cc-x" data-cc-close aria-label="Κλείσιμο">×</button>
+      </div>
+      <div class="cc-modal-body">
+        <div class="cc-cat">
+          <div class="cc-cat-row">
+            <span class="cc-cat-name">Απαραίτητα</span>
+            <span class="cc-badge">Πάντα ενεργά</span>
+          </div>
+          <p class="cc-cat-desc">Απαραίτητα για τη βασική λειτουργία του ιστότοπου (πλοήγηση, ασφάλεια, φόρμες). Δεν απενεργοποιούνται.</p>
+        </div>
+        <div class="cc-cat">
+          <div class="cc-cat-row">
+            <label class="cc-cat-name" for="cc-analytics">Στατιστικά / Analytics</label>
+            <label class="cc-switch"><input type="checkbox" id="cc-analytics" data-cc-cat="analytics" /><span></span></label>
+          </div>
+          <p class="cc-cat-desc">Μας βοηθούν να κατανοήσουμε πώς χρησιμοποιείται ο ιστότοπος (Google Analytics), ώστε να τον βελτιώνουμε.</p>
+        </div>
+        <div class="cc-cat">
+          <div class="cc-cat-row">
+            <label class="cc-cat-name" for="cc-ads">Διαφήμιση / Marketing</label>
+            <label class="cc-switch"><input type="checkbox" id="cc-ads" data-cc-cat="ads" /><span></span></label>
+          </div>
+          <p class="cc-cat-desc">Χρησιμοποιούνται για την εξατομίκευση και τη μέτρηση διαφημίσεων (Google Ads).</p>
+        </div>
+        <div class="cc-cat">
+          <div class="cc-cat-row">
+            <label class="cc-cat-name" for="cc-func">Λειτουργικά</label>
+            <label class="cc-switch"><input type="checkbox" id="cc-func" data-cc-cat="functional" /><span></span></label>
+          </div>
+          <p class="cc-cat-desc">Ενεργοποιούν βελτιωμένες λειτουργίες και εξατομίκευση περιεχομένου.</p>
+        </div>
+      </div>
+      <div class="cc-modal-foot">
+        <button type="button" class="cc-btn cc-ghost" data-cc-reject>Απόρριψη όλων</button>
+        <button type="button" class="cc-btn cc-primary" data-cc-save>Αποθήκευση προτιμήσεων</button>
+      </div>
+      <p class="cc-powered">Consent management powered by <a href="https://www.symbols.gr/" target="_blank" rel="noopener">Symbols House of Brands</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Re-open preferences -->
+<button type="button" class="cc-reopen" data-cc-reopen aria-label="Ρυθμίσεις cookies" title="Ρυθμίσεις cookies" hidden>🍪</button>
+
+<style>
+  .cc, .cc * { box-sizing: border-box; }
+  .cc[hidden], .cc-modal[hidden], .cc-reopen[hidden] { display: none !important; }
+  .cc-banner {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1100;
+    max-width: 460px;
+    background: #fff;
+    color: var(--color-text, #222);
+    border: 1px solid var(--color-border, #e3e6ee);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 8, 127, 0.22);
+    padding: 1.1rem 1.2rem 0.9rem;
+  }
+  .cc-title { font-family: var(--font-heading); font-weight: 700; color: var(--color-primary); margin: 0 0 0.35rem; font-size: 1rem; }
+  .cc-text { font-size: 0.78rem; line-height: 1.55; color: var(--color-text-muted, #5a5a5a); margin: 0 0 0.85rem; }
+  .cc-text a { color: var(--color-primary); text-decoration: underline; }
+  .cc-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .cc-btn { border: 0; border-radius: 999px; padding: 0.55rem 1rem; font-size: 0.82rem; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .cc-primary { background: var(--color-accent, #7cb342); color: var(--color-primary-dark, #00087f); flex: 1; }
+  .cc-primary:hover { filter: brightness(1.05); }
+  .cc-ghost { background: transparent; color: var(--color-primary); border: 1px solid var(--color-border, #e3e6ee); }
+  .cc-ghost:hover { background: var(--color-bg-alt, #f0f4fd); }
+  .cc-powered { margin: 0.75rem 0 0; font-size: 0.66rem; color: #9aa0ad; text-align: center; }
+  .cc-powered a { color: #7a8090; text-decoration: none; }
+  .cc-powered a:hover { text-decoration: underline; }
+
+  .cc-modal { position: fixed; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .cc-modal-backdrop { position: absolute; inset: 0; background: rgba(4, 12, 40, 0.55); }
+  .cc-modal-card { position: relative; background: #fff; border-radius: 16px; width: 100%; max-width: 520px; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 8, 127, 0.35); padding: 1.25rem 1.4rem 1.1rem; }
+  .cc-modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+  .cc-modal-head h2 { font-size: 1.15rem; color: var(--color-primary); margin: 0; }
+  .cc-x { background: none; border: 0; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--color-text-muted, #5a5a5a); }
+  .cc-cat { padding: 0.75rem 0; border-top: 1px solid var(--color-border, #eee); }
+  .cc-cat-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .cc-cat-name { font-weight: 700; color: var(--color-primary); font-size: 0.92rem; }
+  .cc-cat-desc { font-size: 0.76rem; color: var(--color-text-muted, #5a5a5a); margin: 0.3rem 0 0; line-height: 1.5; }
+  .cc-badge { font-size: 0.7rem; font-weight: 700; color: var(--color-accent-2, #2aa0a0); background: rgba(42,160,160,0.12); padding: 0.2rem 0.55rem; border-radius: 999px; white-space: nowrap; }
+  .cc-switch { position: relative; display: inline-block; width: 42px; height: 24px; flex-shrink: 0; }
+  .cc-switch input { opacity: 0; width: 0; height: 0; }
+  .cc-switch span { position: absolute; inset: 0; background: #c9ced9; border-radius: 999px; transition: 0.25s; cursor: pointer; }
+  .cc-switch span::before { content: ''; position: absolute; height: 18px; width: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.25s; }
+  .cc-switch input:checked + span { background: var(--color-accent, #7cb342); }
+  .cc-switch input:checked + span::before { transform: translateX(18px); }
+  .cc-modal-foot { display: flex; gap: 0.6rem; margin-top: 1rem; }
+  .cc-modal-foot .cc-primary { flex: 1; }
+
+  .cc-reopen {
+    position: fixed; left: 14px; bottom: 14px; z-index: 850;
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--color-border, #e3e6ee);
+    background: #fff; box-shadow: 0 4px 16px rgba(0,8,127,0.15); cursor: pointer; font-size: 1.2rem; line-height: 1;
+  }
+  .cc-reopen:hover { background: var(--color-bg-alt, #f0f4fd); }
+
+  @media (max-width: 520px) {
+    .cc-banner { left: 0.6rem; right: 0.6rem; bottom: 0.6rem; max-width: none; }
+    .cc-actions { flex-direction: column-reverse; }
+    .cc-primary, .cc-ghost { width: 100%; flex: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var NAME = 'pd_consent';
+    var root = document.querySelector('[data-cc]');
+    var reopen = document.querySelector('[data-cc-reopen]');
+    var modal = document.querySelector('[data-cc-modal]');
+    if (!root) return;
+
+    function gtagSafe() {
+      window.dataLayer = window.dataLayer || [];
+      return function () { window.dataLayer.push(arguments); };
+    }
+    function readCookie() {
+      var m = document.cookie.match(new RegExp('(?:^|; )' + NAME + '=([^;]*)'));
+      if (!m) return null;
+      try { return JSON.parse(decodeURIComponent(m[1])); } catch (e) { return null; }
+    }
+    function writeCookie(obj) {
+      var d = new Date(); d.setTime(d.getTime() + 180 * 864e5);
+      document.cookie = NAME + '=' + encodeURIComponent(JSON.stringify(obj)) + '; expires=' + d.toUTCString() + '; path=/; SameSite=Lax';
+    }
+    function applyConsent(c) {
+      var gtag = gtagSafe();
+      gtag('consent', 'update', {
+        analytics_storage: c.analytics ? 'granted' : 'denied',
+        ad_storage: c.ads ? 'granted' : 'denied',
+        ad_user_data: c.ads ? 'granted' : 'denied',
+        ad_personalization: c.ads ? 'granted' : 'denied',
+        functionality_storage: c.functional ? 'granted' : 'denied',
+        personalization_storage: c.functional ? 'granted' : 'denied',
+        security_storage: 'granted'
+      });
+      window.dataLayer.push({ event: 'cookie_consent_update', consent: c });
+    }
+    function save(c) {
+      writeCookie(c);
+      applyConsent(c);
+      root.setAttribute('hidden', '');
+      if (modal) modal.setAttribute('hidden', '');
+      if (reopen) reopen.removeAttribute('hidden');
+    }
+    function setToggles(c) {
+      root.querySelectorAll('[data-cc-cat]').forEach(function (el) {
+        el.checked = !!c[el.getAttribute('data-cc-cat')];
+      });
+    }
+    function openModal() {
+      var c = readCookie() || { analytics: false, ads: false, functional: false };
+      setToggles(c);
+      root.removeAttribute('hidden');
+      if (modal) modal.removeAttribute('hidden');
+    }
+
+    // Wire buttons
+    root.querySelector('[data-cc-accept]').addEventListener('click', function () {
+      save({ necessary: true, analytics: true, ads: true, functional: true });
+    });
+    root.querySelectorAll('[data-cc-reject]').forEach(function (b) {
+      b.addEventListener('click', function () { save({ necessary: true, analytics: false, ads: false, functional: false }); });
+    });
+    root.querySelector('[data-cc-settings]').addEventListener('click', openModal);
+    root.querySelector('[data-cc-save]').addEventListener('click', function () {
+      var c = { necessary: true };
+      root.querySelectorAll('[data-cc-cat]').forEach(function (el) { c[el.getAttribute('data-cc-cat')] = el.checked; });
+      save(c);
+    });
+    root.querySelectorAll('[data-cc-close]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (modal) modal.setAttribute('hidden', '');
+        if (!readCookie()) { /* keep banner visible until a choice is made */ }
+        else root.setAttribute('hidden', '');
+      });
+    });
+    if (reopen) reopen.addEventListener('click', function () { openModal(); });
+
+    // On load: if a prior choice exists, hide banner + show reopen; else show banner.
+    var existing = readCookie();
+    if (existing) {
+      if (reopen) reopen.removeAttribute('hidden');
+    } else {
+      root.removeAttribute('hidden');
+    }
+  })();
+</script>

@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+import StickyCTA from '../components/StickyCTA.astro';
 import { site } from '../data/site';
 import { businessSchema, websiteSchema } from '../data/schema';
 
@@ -52,9 +54,6 @@ const schemas = [businessSchema(), websiteSchema(), ...jsonLd].filter(Boolean);
     <script type="application/ld+json" is:inline set:html={JSON.stringify(s)} />
   ))}
 
-  <!-- CookieYes consent -->
-  <script id="cookieyes" type="text/javascript" src={`https://cdn-cookieyes.com/client_data/${site.analytics.cookieYesId}/script.js`} is:inline></script>
-
   <!-- Google Consent Mode default (EU region) -->
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
@@ -72,6 +71,28 @@ const schemas = [businessSchema(), websiteSchema(), ...jsonLd].filter(Boolean);
     });
     gtag('set', 'ads_data_redaction', true);
     gtag('set', 'url_passthrough', true);
+  </script>
+
+  <!-- Re-apply stored cookie consent (before tags fire) -->
+  <script is:inline>
+    (function () {
+      try {
+        var m = document.cookie.match(/(?:^|; )pd_consent=([^;]*)/);
+        if (!m) return;
+        var c = JSON.parse(decodeURIComponent(m[1]));
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'update', {
+          analytics_storage: c.analytics ? 'granted' : 'denied',
+          ad_storage: c.ads ? 'granted' : 'denied',
+          ad_user_data: c.ads ? 'granted' : 'denied',
+          ad_personalization: c.ads ? 'granted' : 'denied',
+          functionality_storage: c.functional ? 'granted' : 'denied',
+          personalization_storage: c.functional ? 'granted' : 'denied',
+          security_storage: 'granted'
+        });
+      } catch (e) {}
+    })();
   </script>
 
   <!-- Google tag (gtag.js) -->
@@ -126,6 +147,9 @@ const schemas = [businessSchema(), websiteSchema(), ...jsonLd].filter(Boolean);
   </main>
 
   <Footer />
+
+  <StickyCTA />
+  <CookieConsent />
 
   <style>
     .skip-link { position: absolute; left: -9999px; top: 0; background: var(--color-primary); color: #fff; padding: 0.75rem 1rem; z-index: 200; }
