@@ -4,10 +4,14 @@ import ContactForm from '../components/ContactForm.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
 import { site } from '../data/site';
 import { heroServices, faqs, testimonials, partners, about, philosophy, servicesIntro, why } from '../data/home';
+import { faqPage } from '../data/schema';
+
+const homeSchema = [faqPage(faqs)].filter(Boolean);
 ---
 <BaseLayout
-  title="Σύγχρονο κέντρο φυσικοθεραπείας στο Π. Φάληρο"
-  description="Physio Dynamic — σύγχρονο κέντρο φυσικοθεραπείας στο Παλαιό Φάληρο. McKenzie, Manual Therapy, Βελονισμός, Shockwave, Pilates, ορθωτικά πέλματα. Καλέστε 211 750 6000."
+  title="Φυσικοθεραπευτής στο Παλαιό Φάληρο — Σύγχρονο Κέντρο Φυσικοθεραπείας"
+  description="Physio Dynamic — σύγχρονο κέντρο φυσικοθεραπείας στο Παλαιό Φάληρο. McKenzie, Manual Therapy, Βελονισμός, Shockwave, Μαγνητικός Διεγέρτης (FMS), Pilates. Συμβεβλημένοι με όλα τα ταμεία. Καλέστε 211 750 6000."
+  jsonLd={homeSchema}
 >
   <script is:inline>
     // Belt-and-suspenders: some browsers refuse to autoplay until the muted flag

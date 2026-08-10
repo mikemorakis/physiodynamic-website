@@ -10,13 +10,14 @@ interface Props {
   heroAlt?: string;
   eyebrow?: string;
   breadcrumb?: { label: string; href: string }[];
+  jsonLd?: any[];
 }
-const { title, description, heroImage, heroAlt, eyebrow = 'Υπηρεσίες', breadcrumb } = Astro.props;
+const { title, description, heroImage, heroAlt, eyebrow = 'Υπηρεσίες', breadcrumb, jsonLd = [] } = Astro.props;
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const otherServices = heroServices.filter((s) => !currentPath.endsWith(`/${s.slug}`));
 ---
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
   <section class:list={["page-hero", heroImage && "has-image"]}>
     {heroImage && (
       <div class="page-hero-bg" aria-hidden="true" style={`background-image: linear-gradient(135deg, rgba(0,8,127,0.82) 0%, rgba(16,50,124,0.65) 100%), url('${heroImage}');`}></div>

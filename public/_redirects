@@ -9,6 +9,16 @@
 /υπηρεσιες/otago-exercise-program-πρόγραμμα-άσκησης-για-πρόληψη-της/ /otago-exercise-program-πρόγραμμα-άσκησης-για-πρόληψη-της/ 301
 /υπηρεσιες/kinesio-taping/ /kinesio-taping/ 301
 
+# Legacy slugs with Greek/Latin lookalike characters (real indexed WordPress URLs)
+# manual: old slug used Greek μ (mu) + Greek τ (tau) → μanual-τherapy
+/υπηρεσιες/μanual-τherapy-δια-χειρός-θεραπεία/ /manual-therapy-δια-χειρός-θεραπεία/ 301
+# otago: old slug was truncated at "-τω" (new one ends "-της")
+/υπηρεσιες/otago-exercise-program-πρόγραμμα-άσκησης-για-πρόληψη-τω/ /otago-exercise-program-πρόγραμμα-άσκησης-για-πρόληψη-της/ 301
+# athletic: old slug used a Latin "t" in "tραυματισμοί" (new one is Greek τ)
+/αθλητικοί-tραυματισμοί/ /αθλητικοί-τραυματισμοί/ 301
+# home-care: old slug had a typo (φυσιοθεραπευτιές, missing κ)
+/κατ-οίκον-φυσιοθεραπευτιές-υπηρεσ/ /κατ-οίκον-φυσιοθεραπευτικές-υπηρεσ/ 301
+
 # Services index → home (services grid lives on the homepage)
 /υπηρεσιες / 301
 /υπηρεσιες/ / 301

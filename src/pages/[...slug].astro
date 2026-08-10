@@ -4,6 +4,8 @@ import PageLayout from '../layouts/PageLayout.astro';
 import { servicePages } from '../data/services';
 import { posts } from '../data/posts';
 import { site } from '../data/site';
+import { serviceSchema, breadcrumb, faqFromSections, blogPosting, faqPage } from '../data/schema';
+import { pillarFaqs, fmsComparison } from '../data/pillar-content';
 
 type Entry =
   | { type: 'service'; page: (typeof servicePages)[number] }
@@ -19,6 +21,31 @@ export async function getStaticPaths() {
 }
 
 const props = Astro.props as Entry;
+
+const pageFaqs = props.type === 'service' ? pillarFaqs[props.page.slug] : undefined;
+const comparison = props.type === 'service' && fmsComparison.slug === props.page.slug ? fmsComparison : null;
+
+const serviceJsonLd = props.type === 'service'
+  ? [
+      serviceSchema(props.page),
+      breadcrumb([
+        { name: 'Αρχική', url: '/' },
+        { name: props.page.title, url: `/${props.page.slug}/` },
+      ]),
+      pageFaqs ? faqPage(pageFaqs) : faqFromSections(props.page.sections as any[]),
+    ].filter(Boolean)
+  : [];
+
+const postJsonLd = props.type === 'post'
+  ? [
+      blogPosting(props.post as any),
+      breadcrumb([
+        { name: 'Αρχική', url: '/' },
+        { name: 'Blog', url: '/category/physiodynamic-blog/' },
+        { name: props.post.title, url: `/${props.post.slug}/` },
+      ]),
+    ]
+  : [];
 ---
 {props.type === 'service' && (
   <PageLayout
@@ -28,6 +55,7 @@ const props = Astro.props as Entry;
     heroAlt={props.page.heroAlt}
     eyebrow="Υπηρεσία"
     breadcrumb={[{ label: props.page.title, href: `/${props.page.slug}/` }]}
+    jsonLd={serviceJsonLd}
   >
     {props.page.sections.map((section) => (
       <section class:list={["page-section", section.lead && "lead-section"]}>
@@ -40,11 +68,69 @@ const props = Astro.props as Entry;
         )}
       </section>
     ))}
+
+    {comparison && (
+      <section class="page-section compare-section">
+        <h2>{comparison.heading}</h2>
+        <p>{comparison.intro}</p>
+        <div class="compare-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>{comparison.columns.map((c) => <th>{c}</th>)}</tr>
+            </thead>
+            <tbody>
+              {comparison.rows.map((row) => (
+                <tr>{row.map((cell, i) => (i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}</tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {pageFaqs && (
+      <section class="page-section faq-section">
+        <h2>Συχνές Ερωτήσεις</h2>
+        <div class="svc-faq">
+          {pageFaqs.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <div class="svc-faq-a"><p>{f.a}</p></div>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <aside class="author-box" aria-label="Συντάκτης">
+      <div class="author-meta">
+        <p class="author-name">{site.owner}</p>
+        <p class="author-role">Φυσικοθεραπευτής · Υπεύθυνος Physio Dynamic</p>
+        <p class="author-desc">Το περιεχόμενο επιμελείται η ομάδα του Physio Dynamic, σύγχρονου κέντρου φυσικοθεραπείας στο Παλαιό Φάληρο, με εξειδίκευση σε σύγχρονες μεθόδους αποκατάστασης.</p>
+      </div>
+    </aside>
   </PageLayout>
+
+  <style>
+    .compare-wrap { overflow-x: auto; }
+    .compare-table { width: 100%; border-collapse: collapse; margin: 0.5rem 0 1rem; font-size: 0.95rem; }
+    .compare-table th, .compare-table td { border: 1px solid var(--color-border); padding: 0.65rem 0.85rem; text-align: left; vertical-align: top; }
+    .compare-table thead th { background: var(--color-primary); color: #fff; }
+    .compare-table tbody th[scope="row"] { background: var(--color-bg-alt); font-weight: 700; color: var(--color-primary); }
+    .svc-faq details { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius); margin-bottom: 0.6rem; overflow: hidden; }
+    .svc-faq summary { padding: 0.9rem 1.1rem; cursor: pointer; font-family: var(--font-heading); font-weight: 700; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .svc-faq summary::after { content: '+'; font-size: 1.4rem; color: var(--color-primary); }
+    .svc-faq details[open] summary::after { content: '−'; }
+    .svc-faq-a { padding: 0 1.1rem 1rem; color: var(--color-text-muted); }
+    .author-box { margin-top: 2.5rem; padding: 1.25rem 1.5rem; border-left: 3px solid var(--color-accent); background: var(--color-bg-alt); border-radius: var(--radius); }
+    .author-name { font-weight: 700; color: var(--color-primary); margin: 0; }
+    .author-role { font-size: 0.9rem; color: var(--color-text-muted); margin: 0.15rem 0 0.5rem; }
+    .author-desc { font-size: 0.9rem; color: var(--color-text-muted); margin: 0; }
+  </style>
 )}
 
 {props.type === 'post' && (
-  <BaseLayout title={props.post.title} description={props.post.excerpt} ogImage={props.post.heroImage}>
+  <BaseLayout title={props.post.title} description={props.post.excerpt} ogImage={props.post.heroImage} jsonLd={postJsonLd}>
     <article class="post">
       <header class="post-hero">
         <div class="wrap">
