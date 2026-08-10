@@ -49,6 +49,11 @@ import { site } from '../data/site';
 
   <div class="bottom">
     <div class="wrap bottom-inner">
+      <p class="footer-legal">
+        <a href="/πολιτικη-απορρητου/">Πολιτική Απορρήτου</a> ·
+        <a href="/πολιτικη-cookies/">Πολιτική Cookies</a> ·
+        <a href="/οροι-χρησης/">Όροι Χρήσης</a>
+      </p>
       <p>&copy; 2022 – {new Date().getFullYear()} Physio Dynamic. All rights reserved.</p>
       <p>Designed by <a href="https://www.symbols.gr/" target="_blank" rel="noopener">Symbols®</a> · Developed by <a href="https://www.symbols.gr/" target="_blank" rel="noopener">shortcode®</a></p>
       <p class="icon-credit">Icons by <a href="https://www.flaticon.com/authors/magnific" target="_blank" rel="noopener">Magnific</a> &amp; <a href="https://www.flaticon.com/authors/umeicon" target="_blank" rel="noopener">Umeicon</a> from <a href="https://www.flaticon.com/" target="_blank" rel="noopener">Flaticon</a></p>
@@ -82,6 +87,9 @@ import { site } from '../data/site';
   .bottom-inner p { margin: 0; }
   .icon-credit { flex-basis: 100%; font-size: 0.75rem; color: rgba(255,255,255,0.55); }
   .icon-credit a { color: rgba(255,255,255,0.7); }
+  .footer-legal { flex-basis: 100%; }
+  .footer-legal a { color: var(--color-accent); }
+  .footer-legal a:hover { color: #fff; }
 
   .call-fab { display: none; }
   @media (max-width: 600px) { .call-fab span { display: none; } .call-fab { padding: 0.85rem; } }
