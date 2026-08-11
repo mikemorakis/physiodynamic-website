@@ -182,6 +182,12 @@ const postJsonLd = props.type === 'post'
   .post-content :global(h3) { margin-top: 2rem; color: var(--color-primary); }
   .post-content :global(p) { margin-bottom: 1.15em; line-height: 1.7; }
   .post-content :global(.source) { color: var(--color-text-muted); font-size: 0.9rem; margin-top: 2rem; }
+  .post-content :global(.post-table-wrap) { overflow-x: auto; margin: 1.75rem 0; }
+  .post-content :global(table) { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  .post-content :global(th), .post-content :global(td) { border: 1px solid var(--color-border); padding: 0.65rem 0.85rem; text-align: left; vertical-align: top; }
+  .post-content :global(thead th) { background: var(--color-primary); color: #fff; font-family: var(--font-heading); }
+  .post-content :global(tbody th) { background: var(--color-bg-alt); color: var(--color-primary); font-weight: 700; }
+  .post-content :global(tbody tr:nth-child(even)) { background: var(--color-bg-alt); }
 
   .post-cta { margin: 3rem 0 2rem; padding: 1.75rem; background: var(--color-bg-alt); border-radius: var(--radius); text-align: center; }
   .post-cta p { font-family: var(--font-heading); text-transform: uppercase; font-weight: 700; margin-bottom: 1rem; }

@@ -131,8 +131,10 @@ export function blogPosting(post: {
   heroImage?: string;
   author?: string;
   dateDisplay?: string;
+  date?: string;
   datePublished?: string;
 }) {
+  const published = post.datePublished || post.date;
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -142,6 +144,6 @@ export function blogPosting(post: {
     author: { '@type': post.author ? 'Person' : 'Organization', name: post.author || site.name },
     publisher: { '@id': BUSINESS_ID },
     mainEntityOfPage: `${SITE}/${post.slug}/`,
-    ...(post.datePublished ? { datePublished: post.datePublished } : {}),
+    ...(published ? { datePublished: published, dateModified: published } : {}),
   };
 }

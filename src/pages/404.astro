@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+<BaseLayout
+  title="Η σελίδα δεν βρέθηκε (404)"
+  description="Η σελίδα που ζητήσατε δεν βρέθηκε. Επιστρέψτε στην αρχική ή δείτε τις υπηρεσίες φυσικοθεραπείας του Physio Dynamic."
+>
+  <section class="nf">
+    <div class="wrap nf-inner">
+      <p class="nf-code">404</p>
+      <h1>Ουπς! Η σελίδα δεν βρέθηκε.</h1>
+      <p class="nf-lead">Η σελίδα που ψάχνετε μπορεί να μετακινήθηκε ή να μην υπάρχει πλέον. Ας σας βοηθήσουμε να βρείτε αυτό που χρειάζεστε.</p>
+
+      <div class="nf-actions">
+        <a href="/" class="btn btn-accent">Αρχική σελίδα</a>
+        <a href={site.bookingUrl} target="_blank" rel="noopener" class="btn">Κλείσε ραντεβού</a>
+        <a href={`tel:00302117506000`} class="btn">Καλέστε {site.phoneDisplay}</a>
+      </div>
+
+      <div class="nf-links">
+        <p class="nf-links-title">Δημοφιλείς σελίδες</p>
+        <ul>
+          <li><a href="/ποιοι-ειμαστε/">Ποιοι είμαστε</a></li>
+          <li><a href="/mckenzie-μηχανική-διάγνωση-και-θεραπεία/">Μέθοδος McKenzie</a></li>
+          <li><a href="/λειτουργική-μαγνητική-διέγερση-fms/">Μαγνητικός Διεγέρτης (FMS)</a></li>
+          <li><a href="/αξιολογησεις/">Αξιολογήσεις</a></li>
+          <li><a href="/category/physiodynamic-blog/">Blog</a></li>
+          <li><a href="/επικοινωνια/">Επικοινωνία</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: #fff;
+    padding: 4rem 0 4.5rem;
+    text-align: center;
+  }
+  .nf-inner { max-width: 720px; }
+  .nf-code {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(4.5rem, 16vw, 8rem);
+    line-height: 1;
+    margin: 0;
+    color: var(--color-accent);
+    letter-spacing: -0.03em;
+  }
+  .nf h1 { color: #fff; margin: 0.25rem 0 0.75rem; font-size: clamp(1.5rem, 4vw, 2.1rem); }
+  .nf-lead { color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.7; margin: 0 auto 2rem; max-width: 560px; }
+  .nf-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; }
+  .nf .btn { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.35); }
+  .nf .btn:hover { background: rgba(255,255,255,0.2); }
+  .nf .btn-accent { background: var(--color-accent); color: var(--color-primary-dark); border: 0; }
+  .nf .btn-accent:hover { filter: brightness(1.05); }
+  .nf-links-title { text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 0.75rem; }
+  .nf-links ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: center; }
+  .nf-links a { color: var(--color-accent); font-weight: 600; font-size: 0.95rem; }
+  .nf-links a:hover { color: #fff; }
+</style>

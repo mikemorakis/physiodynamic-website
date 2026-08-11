@@ -17,7 +17,7 @@ export const site = {
     { day: 'Κυριακή', time: 'Κλειστά' },
   ],
   headerStrip: 'Είμαστε συμβεβλημένοι με ολα τα ταμεία. Καλέστε στο 211 750 6000 για να προγραμματίσετε το ραντεβού σας.',
-  bookingUrl: 'https://doodle.com/bp/ioanniskotoulas/physio-dynamic-?reauth=true',
+  bookingUrl: 'https://www.instadoctor.gr/doctor/kotoulas-ioannis',
   social: {
     facebook: 'http://facebook.com/kotoulasphysio',
     instagram: 'https://www.instagram.com/physiodynamicgr/',
