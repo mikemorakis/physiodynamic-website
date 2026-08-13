@@ -1,7 +1,5 @@
-@import '@fontsource/roboto/400.css';
-@import '@fontsource/roboto/500.css';
-@import '@fontsource/roboto/700.css';
-@import '@fontsource/roboto-condensed/700.css';
+/* Google Sans (Greek + Latin) is loaded via <link> in BaseLayout.astro head
+   (fonts.googleapis.com), with display=swap. */
 
 :root {
   --color-primary: #10327c;
@@ -14,8 +12,8 @@
   --color-bg-alt: #f1f1f1;
   --color-border: #e5e5e5;
 
-  --font-body: 'Roboto', system-ui, sans-serif;
-  --font-heading: 'Roboto Condensed', 'Roboto', system-ui, sans-serif;
+  --font-body: 'Google Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Google Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
   --wrap: 1200px;
   --gap: 1.5rem;

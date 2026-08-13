@@ -14,18 +14,33 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   jsonLd={homeSchema}
 >
   <script is:inline>
-    // Belt-and-suspenders: some browsers refuse to autoplay until the muted flag
-    // is set from JS AND a play() call is attempted. Also retry play on first
-    // user interaction if the browser blocked autoplay entirely.
+    // Performance: the hero video is NOT downloaded on initial load (preload="none",
+    // no <source> in HTML). The still poster paints immediately and becomes the LCP.
+    // We inject the video source only once the page is idle, so 20+ MB of video never
+    // competes with critical resources. Also loads on first user interaction.
     (function () {
-      const v = document.querySelector('[data-hero-video]');
-      if (!v) return;
-      v.muted = true;
-      const tryPlay = () => v.play().catch(() => {});
-      tryPlay();
+      // NOTE: this script runs before the <video> is parsed, so we must look it
+      // up INSIDE loadVideo (which fires after the DOM is ready), not up front.
+      function loadVideo() {
+        const v = document.querySelector('[data-hero-video]');
+        if (!v || v.dataset.loaded) return;
+        v.dataset.loaded = '1';
+        v.muted = true;
+        const s = document.createElement('source');
+        s.src = v.getAttribute('data-src');
+        s.type = 'video/mp4';
+        v.appendChild(s);
+        v.load();
+        v.play().catch(() => {});
+      }
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadVideo, { timeout: 2500 });
+      } else {
+        window.addEventListener('load', function () { setTimeout(loadVideo, 1200); });
+      }
       ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach((ev) => {
         window.addEventListener(ev, function once() {
-          tryPlay();
+          loadVideo();
           window.removeEventListener(ev, once);
         }, { once: true, passive: true });
       });
@@ -36,18 +51,15 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   <section class="hero">
     <video
       class="hero-video"
-      autoplay
       muted
       loop
       playsinline
-      preload="auto"
+      preload="none"
       poster="/hero-fallback.jpg"
+      data-src="/hero.mp4"
       data-hero-video
-    >
-      <source src="/hero.mp4" type="video/mp4" />
-      <img src="/hero-fallback.jpg" alt="" class="hero-video-fallback" />
-    </video>
-    <img class="hero-fallback-img" src="/hero-fallback.jpg" alt="" aria-hidden="true" />
+    ></video>
+    <img class="hero-fallback-img" src="/hero-fallback.jpg" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1400" height="726" />
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="wrap hero-inner">
