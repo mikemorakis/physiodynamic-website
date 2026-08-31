@@ -39,7 +39,7 @@ import { site } from '../data/site';
       <ul class="link-list">
         <li><a href="/">Αρχική</a></li>
         <li><a href="/ποιοι-ειμαστε/">Προφίλ</a></li>
-        <li><a href="/υπηρεσιες/">Υπηρεσίες</a></li>
+        <li><a href="/#services">Υπηρεσίες</a></li>
         <li><a href="/category/physiodynamic-blog/">Blog</a></li>
         <li><a href="/επικοινωνια/">Επικοινωνία</a></li>
         <li><a href={site.bookingUrl} target="_blank" rel="noopener">Κλείσε ραντεβού</a></li>
@@ -83,6 +83,7 @@ import { site } from '../data/site';
   .link-list li { padding: 0.2rem 0; }
 
   .bottom { border-top: 1px solid rgba(255,255,255,0.15); padding: 1.5rem 0; margin-top: 1rem; font-size: 0.85rem; }
+  .bottom p a { text-decoration: underline; }
   .bottom-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
   .bottom-inner p { margin: 0; }
   .icon-credit { flex-basis: 100%; font-size: 0.75rem; color: rgba(255,255,255,0.55); }

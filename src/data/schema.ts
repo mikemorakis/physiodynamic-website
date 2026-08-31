@@ -100,13 +100,16 @@ export function faqFromSections(sections: any[]) {
   return faqPage(pairs);
 }
 
-export function serviceSchema(page: { slug: string; title: string; description?: string }) {
+export function serviceSchema(page: { slug: string; title: string; description?: string; heroImage?: string }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'MedicalTherapy',
     name: page.title,
     description: page.description,
     url: `${SITE}/${page.slug}/`,
+    inLanguage: 'el',
+    mainEntityOfPage: `${SITE}/${page.slug}/`,
+    ...(page.heroImage ? { image: page.heroImage.startsWith('http') ? page.heroImage : `${SITE}${page.heroImage}` } : {}),
     provider: { '@id': BUSINESS_ID },
   };
 }

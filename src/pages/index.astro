@@ -7,12 +7,25 @@ import { heroServices, faqs, testimonials, partners, about, philosophy, services
 import { faqPage } from '../data/schema';
 
 const homeSchema = [faqPage(faqs)].filter(Boolean);
+
+// Map a full-size image path to its pre-generated 480px thumbnail
+// (created for every homepage grid image; falls back to the original).
+const thumb = (p: string) => p.replace(/\.(jpe?g|png)$/i, '-thumb.jpg');
 ---
 <BaseLayout
   title="Φυσικοθεραπευτής στο Παλαιό Φάληρο — Σύγχρονο Κέντρο Φυσικοθεραπείας"
   description="Physio Dynamic — σύγχρονο κέντρο φυσικοθεραπείας στο Παλαιό Φάληρο. McKenzie, Manual Therapy, Βελονισμός, Shockwave, Μαγνητικός Διεγέρτης (FMS), Pilates. Συμβεβλημένοι με όλα τα ταμεία. Καλέστε 211 750 6000."
   jsonLd={homeSchema}
 >
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    href="/hero-poster-1280.jpg"
+    imagesrcset="/hero-poster-750.jpg 750w, /hero-poster-1100.jpg 1100w, /hero-poster-1280.jpg 1280w"
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
   <script is:inline>
     // Performance: the hero video is NOT downloaded on initial load (preload="none",
     // no <source> in HTML). The still poster paints immediately and becomes the LCP.
@@ -31,6 +44,10 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
         s.type = 'video/mp4';
         v.appendChild(s);
         v.load();
+        v.addEventListener('playing', function () {
+          var hero = v.closest('.hero');
+          if (hero) hero.classList.add('video-playing');
+        }, { once: true });
         v.play().catch(() => {});
       }
       if ('requestIdleCallback' in window) {
@@ -49,17 +66,30 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
 
   <!-- HERO -->
   <section class="hero">
+    <!-- No poster: the identical still image sits right underneath, so the
+         (initially transparent) video isn't the LCP element — the fast
+         preloaded <img> is. -->
     <video
       class="hero-video"
       muted
       loop
       playsinline
       preload="none"
-      poster="/hero-fallback.jpg"
       data-src="/hero.mp4"
       data-hero-video
     ></video>
-    <img class="hero-fallback-img" src="/hero-fallback.jpg" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1400" height="726" />
+    <img
+      class="hero-fallback-img"
+      src="/hero-poster-1280.jpg"
+      srcset="/hero-poster-750.jpg 750w, /hero-poster-1100.jpg 1100w, /hero-poster-1280.jpg 1280w"
+      sizes="100vw"
+      alt=""
+      aria-hidden="true"
+      fetchpriority="high"
+      decoding="async"
+      width="1280"
+      height="720"
+    />
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="wrap hero-inner">
@@ -82,14 +112,14 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   </section>
 
   <!-- ABOUT -->
-  <section class="section about-section">
+  <section class="section about-section cv-auto">
     <div class="wrap about-grid">
       <div class="about-media">
         <figure class="about-photo-main">
-          <img src="/wp-content/uploads/2022/04/GIO_7447.jpg" alt="Physio Dynamic — Θεραπεία στο κέντρο" loading="lazy" />
+          <img src="/wp-content/uploads/2022/04/GIO_7447-thumb.jpg" alt="Physio Dynamic — Θεραπεία στο κέντρο" loading="lazy" decoding="async" width="360" height="480" />
         </figure>
         <figure class="about-photo-inset">
-          <img src="/wp-content/uploads/2022/04/GIO_7737.jpg" alt="Θεραπευτική άσκηση" loading="lazy" />
+          <img src="/wp-content/uploads/2022/04/GIO_7737-thumb.jpg" alt="Θεραπευτική άσκηση" loading="lazy" decoding="async" width="480" height="320" />
         </figure>
       </div>
 
@@ -119,7 +149,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   </section>
 
   <!-- PATIENT-CENTERED -->
-  <section class="section patient-band">
+  <section class="section patient-band cv-auto">
     <div class="patient-bg" aria-hidden="true"></div>
     <div class="wrap text-center patient-content">
       <p class="eyebrow">Η φιλοσοφία μας</p>
@@ -129,7 +159,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   </section>
 
   <!-- SERVICES -->
-  <section class="section">
+  <section class="section cv-auto" id="services">
     <div class="wrap">
       <div class="text-center" style="margin-bottom:2.5rem;">
         <p class="eyebrow">Υπηρεσίες</p>
@@ -140,7 +170,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
         {heroServices.map((s) => (
           <a href={`/${s.slug}/`} class="service-card">
             <div class="service-image">
-              <img src={s.image} alt={s.title} loading="lazy" />
+              <img src={thumb(s.image)} alt={s.title} loading="lazy" decoding="async" width="480" height="320" />
             </div>
             <div class="service-icon-row" aria-hidden="true">
               <div class="service-icon">
@@ -164,7 +194,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   </section>
 
   <!-- FAQ -->
-  <section class="section section-faq">
+  <section class="section section-faq cv-auto">
     <div class="wrap faq-wrap">
       <div class="text-center" style="margin-bottom:2rem;">
         <p class="eyebrow">FAQ</p>
@@ -184,7 +214,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="section section-testimonials">
+  <section class="section section-testimonials cv-auto">
     <div class="wrap">
       <div class="text-center" style="margin-bottom:2rem;">
         <p class="eyebrow">Αξιολογήσεις</p>
@@ -194,7 +224,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
         {testimonials.map((t) => (
           <div class="card testimonial">
             <div class="testimonial-header">
-              <img src={t.image} alt={t.name} class="testimonial-avatar" />
+              <img src={t.image} alt={t.name} class="testimonial-avatar" loading="lazy" decoding="async" width="96" height="96" />
               <div class="testimonial-info">
                 <cite>{t.name}</cite>
                 <div class="testimonial-stars">
@@ -213,7 +243,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   </section>
 
   <!-- PARTNERS -->
-  <section class="section section-partners">
+  <section class="section section-partners cv-auto">
     <div class="wrap text-center">
       <p class="eyebrow">Δίκτυο</p>
       <h2>Συνεργασίες</h2>
@@ -229,7 +259,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   </section>
 
   <!-- WHY -->
-  <section class="section why-band">
+  <section class="section why-band cv-auto">
     <div class="wrap">
       <div class="why-grid">
         <div>
@@ -245,7 +275,7 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
   </section>
 
   <!-- CONTACT -->
-  <section class="section contact-band">
+  <section class="section contact-band cv-auto">
     <div class="wrap contact-grid">
       <div>
         <p class="eyebrow">Καλέστε μας</p>
@@ -288,9 +318,12 @@ const homeSchema = [faqPage(faqs)].filter(Boolean);
     object-fit: cover;
     object-position: center;
     z-index: 0;
-    animation: heroZoom 20s ease-in-out infinite alternate;
-    will-change: transform;
+    /* Delay the zoom so no animation work happens during initial load
+       (keeps the main thread free for LCP/TTI). */
+    animation: heroZoom 20s ease-in-out 5s infinite alternate;
   }
+  /* Once the video is playing it fully covers the image — stop animating/painting it. */
+  .hero.video-playing .hero-fallback-img { animation: none; visibility: hidden; }
   @keyframes heroZoom {
     from { transform: scale(1); }
     to   { transform: scale(1.10); }

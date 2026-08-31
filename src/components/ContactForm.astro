@@ -6,24 +6,31 @@ interface Props {
 }
 const { compact = false, showEmail = true, submitLabel = 'Αποστολή' } = Astro.props;
 ---
-<form class:list={["contact-form", compact && "compact"]} action="/api/contact" method="POST" data-contact-form>
+<form
+  class:list={["contact-form", compact && "compact"]}
+  action="/api/contact"
+  method="POST"
+  data-contact-form
+  toolname="sendContactMessage"
+  tooldescription="Στέλνει μήνυμα επικοινωνίας στο κέντρο φυσικοθεραπείας Physio Dynamic (Παλαιό Φάληρο) — π.χ. ερώτηση ή αίτημα για ραντεβού."
+>
   <div class="field">
     <label for="cf-name">Ονοματεπώνυμο *</label>
-    <input id="cf-name" name="name" type="text" required autocomplete="name" />
+    <input id="cf-name" name="name" type="text" required autocomplete="name" toolparamdescription="Ονοματεπώνυμο του ασθενή/ενδιαφερόμενου." />
   </div>
   <div class="field">
     <label for="cf-phone">Τηλέφωνο *</label>
-    <input id="cf-phone" name="phone" type="tel" required autocomplete="tel" pattern="[0-9+\s\-()]{6,}" />
+    <input id="cf-phone" name="phone" type="tel" required autocomplete="tel" pattern="[0-9+\s\-()]{6,}" toolparamdescription="Τηλέφωνο επικοινωνίας για να καλέσει πίσω το κέντρο." />
   </div>
   {showEmail && (
     <div class="field">
       <label for="cf-email">Email</label>
-      <input id="cf-email" name="email" type="email" autocomplete="email" />
+      <input id="cf-email" name="email" type="email" autocomplete="email" toolparamdescription="Διεύθυνση email (προαιρετική)." />
     </div>
   )}
   <div class="field">
     <label for="cf-message">Το μήνυμά σας</label>
-    <textarea id="cf-message" name="message" rows={compact ? 3 : 5}></textarea>
+    <textarea id="cf-message" name="message" rows={compact ? 3 : 5} toolparamdescription="Το μήνυμα: σύντομη περιγραφή του προβλήματος ή του αιτήματος (π.χ. πόνος στη μέση, αίτημα ραντεβού)."></textarea>
   </div>
   <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true" />
   <button type="submit" class="btn btn-accent">{submitLabel}</button>

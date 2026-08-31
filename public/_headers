@@ -1,0 +1,15 @@
+# Long-lived caching for static assets (Cloudflare Pages)
+/wp-content/*
+  Cache-Control: public, max-age=31536000, immutable
+/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+/testimonials/*
+  Cache-Control: public, max-age=31536000, immutable
+/hero.mp4
+  Cache-Control: public, max-age=31536000, immutable
+/hero-poster-1280.jpg
+  Cache-Control: public, max-age=31536000, immutable
+/hero-poster-750.jpg
+  Cache-Control: public, max-age=31536000, immutable
+/hero-fallback.jpg
+  Cache-Control: public, max-age=31536000, immutable

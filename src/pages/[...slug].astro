@@ -5,7 +5,7 @@ import { servicePages } from '../data/services';
 import { posts } from '../data/posts';
 import { site } from '../data/site';
 import { serviceSchema, breadcrumb, faqFromSections, blogPosting, faqPage } from '../data/schema';
-import { pillarFaqs, fmsComparison } from '../data/pillar-content';
+import { pillarFaqs, fmsComparison, serviceVideos, postVideos } from '../data/pillar-content';
 
 type Entry =
   | { type: 'service'; page: (typeof servicePages)[number] }
@@ -23,6 +23,11 @@ export async function getStaticPaths() {
 const props = Astro.props as Entry;
 
 const pageFaqs = props.type === 'service' ? pillarFaqs[props.page.slug] : undefined;
+const pageVideos =
+  props.type === 'service' ? serviceVideos[props.page.slug] : postVideos[props.post.slug];
+
+// Branded placeholder shown on video cards before the user presses play.
+const LOGO = '/wp-content/uploads/2022/03/cropped-logo-%CE%99%CF%89%CE%AC%CE%BD%CE%BD%CE%B7%CF%82-%CE%9A%CF%89%CF%84%CE%BF%CF%85%CE%BB%CE%B1%CF%82-e1648814356905.jpg';
 const comparison = props.type === 'service' && fmsComparison.slug === props.page.slug ? fmsComparison : null;
 
 const serviceJsonLd = props.type === 'service'
@@ -109,6 +114,31 @@ const postJsonLd = props.type === 'post'
         <p class="author-desc">Το περιεχόμενο επιμελείται η ομάδα του Physio Dynamic, σύγχρονου κέντρου φυσικοθεραπείας στο Παλαιό Φάληρο, με εξειδίκευση σε σύγχρονες μεθόδους αποκατάστασης.</p>
       </div>
     </aside>
+
+    {pageVideos && (
+      <section slot="below" class="video-section">
+        <h2 class="video-heading">Δείτε στην πράξη</h2>
+        <div class="yt-grid">
+          {pageVideos.map((v) => (
+            <div class:list={["yt-frame", v.portrait && "yt-portrait"]}>
+              <button
+                type="button"
+                class="yt-facade"
+                data-yt={v.id}
+                data-title={v.title}
+                aria-label={`Αναπαραγωγή βίντεο: ${v.title}`}
+              >
+                <span class="yt-logo"><img src={LOGO} alt="" loading="lazy" decoding="async" width="180" height="34" /></span>
+                <span class="yt-play" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+                <span class="yt-title">{v.title}</span>
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
   </PageLayout>
 
   <style>
@@ -151,7 +181,32 @@ const postJsonLd = props.type === 'post'
             <img src={props.post.heroImage} alt={props.post.heroAlt || props.post.title} loading="lazy" />
           </figure>
         )}
-        <div class="post-content" set:html={props.post.bodyHtml}></div>
+        <div class="post-content" set:html={props.post.bodyHtml.replace(/<(\/?)h3\b/g, '<$1h2')}></div>
+
+        {pageVideos && (
+          <section class="video-section">
+            <h2 class="video-heading">Σχετικό βίντεο</h2>
+            <div class="yt-grid">
+              {pageVideos.map((v) => (
+                <div class:list={["yt-frame", v.portrait && "yt-portrait"]}>
+                  <button
+                    type="button"
+                    class="yt-facade"
+                    data-yt={v.id}
+                    data-title={v.title}
+                    aria-label={`Αναπαραγωγή βίντεο: ${v.title}`}
+                  >
+                    <span class="yt-logo"><img src={LOGO} alt="" loading="lazy" decoding="async" width="180" height="34" /></span>
+                    <span class="yt-play" aria-hidden="true">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </span>
+                    <span class="yt-title">{v.title}</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <div class="post-cta">
           <p>Χρειάζεστε φυσικοθεραπευτική αξιολόγηση;</p>
@@ -178,8 +233,10 @@ const postJsonLd = props.type === 'post'
 
   .post-body { max-width: 780px; padding: 3rem 1.25rem; }
   .post-figure { margin: 0 0 2rem; }
-  .post-figure img { width: 100%; border-radius: var(--radius); }
-  .post-content :global(h3) { margin-top: 2rem; color: var(--color-primary); }
+  /* Fixed aspect ratio reserves the image's space before it loads (CLS = 0). */
+  .post-figure img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); }
+  .post-content :global(h2), .post-content :global(h3) { margin-top: 2rem; color: var(--color-primary); }
+  .post-content :global(h2) { font-size: 1.35rem; }
   .post-content :global(p) { margin-bottom: 1.15em; line-height: 1.7; }
   .post-content :global(.source) { color: var(--color-text-muted); font-size: 0.9rem; margin-top: 2rem; }
   .post-content :global(.post-table-wrap) { overflow-x: auto; margin: 1.75rem 0; }
@@ -194,4 +251,41 @@ const postJsonLd = props.type === 'post'
   .post-cta .btn { margin: 0.25rem; }
 
   .back-link { margin-top: 2rem; }
+
+  /* --- YouTube click-to-play facades (no iframe until the user presses play).
+         Cards show a branded Physio Dynamic placeholder, not YouTube's auto-thumbnail. --- */
+  :global(.page-below) { padding-bottom: 1rem; }
+  :global(.video-section) { margin: 2.5rem 0 1.5rem; }
+  :global(.video-heading) { color: var(--color-primary); margin-bottom: 0.25rem; }
+  :global(.yt-grid) { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem; }
+  :global(.yt-frame) { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--color-primary-dark); aspect-ratio: 16 / 9; flex: 1 1 560px; max-width: 720px; }
+  :global(.yt-frame.yt-portrait) { aspect-ratio: 9 / 16; flex: 0 1 270px; max-width: 280px; min-width: 210px; }
+  :global(.yt-frame iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  :global(.yt-facade) { position: absolute; inset: 0; width: 100%; height: 100%; padding: 1rem; border: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  :global(.yt-logo) { background: #fff; border-radius: 10px; padding: 0.55rem 0.9rem; display: inline-flex; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+  :global(.yt-logo img) { width: 170px; max-width: 100%; height: auto; display: block; }
+  :global(.yt-play) { width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 0, 0, 0.92); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.4); transition: transform 0.15s ease, background 0.15s ease; }
+  :global(.yt-facade:hover .yt-play), :global(.yt-facade:focus-visible .yt-play) { background: #f00; transform: scale(1.08); }
+  :global(.yt-title) { position: absolute; left: 0; right: 0; bottom: 0; padding: 0.6rem 0.75rem; font-size: 0.85rem; font-weight: 700; color: #fff; text-align: left; background: linear-gradient(transparent, rgba(0,0,0,0.65)); }
+  @media (max-width: 640px) {
+    :global(.yt-frame) { flex-basis: 100%; }
+    :global(.yt-frame.yt-portrait) { flex: 0 1 calc(50% - 0.65rem); min-width: 150px; }
+    :global(.yt-logo img) { width: 120px; }
+  }
 </style>
+
+<script>
+  // Swap a facade for the real YouTube iframe only when the user presses play.
+  document.querySelectorAll<HTMLButtonElement>('.yt-facade').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.yt;
+      if (!id) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0`;
+      iframe.title = btn.dataset.title || 'YouTube video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      btn.replaceWith(iframe);
+    });
+  });
+</script>

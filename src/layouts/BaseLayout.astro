@@ -1,9 +1,13 @@
 ---
 import '../styles/global.css';
+// Hashed URLs of the critical font files so we can preload them (body 400 / bold 700).
+import fontLatin400 from '@fontsource/google-sans/files/google-sans-latin-400-normal.woff2?url';
+import fontGreek400 from '@fontsource/google-sans/files/google-sans-greek-400-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import StickyCTA from '../components/StickyCTA.astro';
+import WebMCP from '../components/WebMCP.astro';
 import { site } from '../data/site';
 import { businessSchema, websiteSchema } from '../data/schema';
 
@@ -49,10 +53,10 @@ const schemas = [businessSchema(), websiteSchema(), ...jsonLd].filter(Boolean);
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.ico" />
 
-  <!-- Google Sans (Greek + Latin) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+  <!-- Google Sans: self-hosted. Preload only the body (400) weights — the bold
+       files swap in via CSS without competing with the LCP image download. -->
+  <link rel="preload" href={fontLatin400} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={fontGreek400} as="font" type="font/woff2" crossorigin />
 
   <!-- Structured data (JSON-LD) -->
   {schemas.map((s) => (
@@ -100,15 +104,42 @@ const schemas = [businessSchema(), websiteSchema(), ...jsonLd].filter(Boolean);
     })();
   </script>
 
-  <!-- Google tag (gtag.js) -->
-  <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.analytics.gtag}`} is:inline></script>
-  <script is:inline define:vars={{ gtagId: site.analytics.gtag, adsId: site.analytics.ads }}>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    var noLinker = { linker: { accept_incoming: false, decorate_forms: false, domains: [] } };
-    gtag('config', gtagId, noLinker);
-    gtag('config', adsId, noLinker);
+  <!-- Google tag (gtag.js) + GTM — DEFERRED until first user interaction (or ~6s
+       fallback) so 200+ KB of third-party JS never blocks the initial render.
+       All dataLayer pushes made before load are queued and flushed by gtag itself. -->
+  <script is:inline define:vars={{ gtagId: site.analytics.gtag, adsId: site.analytics.ads, gtmId: site.analytics.gtm }}>
+    (function () {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      // Queue the config now — flushed when gtag.js loads.
+      gtag('js', new Date());
+      var noLinker = { linker: { accept_incoming: false, decorate_forms: false, domains: [] } };
+      gtag('config', gtagId, noLinker);
+      gtag('config', adsId, noLinker);
+
+      var loaded = false;
+      function loadTags() {
+        if (loaded) return;
+        loaded = true;
+        var a = document.createElement('script');
+        a.async = true;
+        a.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtagId;
+        document.head.appendChild(a);
+        window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var b = document.createElement('script');
+        b.async = true;
+        b.src = 'https://www.googletagmanager.com/gtm.js?id=' + gtmId;
+        document.head.appendChild(b);
+      }
+      var evts = ['pointerdown', 'touchstart', 'keydown', 'scroll', 'mousemove'];
+      function once() {
+        loadTags();
+        evts.forEach(function (ev) { window.removeEventListener(ev, once); });
+      }
+      evts.forEach(function (ev) { window.addEventListener(ev, once, { once: false, passive: true }); });
+      // Fallback: users who never interact still get tracked shortly after load.
+      window.addEventListener('load', function () { setTimeout(loadTags, 6000); });
+    })();
   </script>
 
   <!-- Strip _gl / _ga / gclid tracking params from the URL so the address bar stays clean -->
@@ -124,15 +155,6 @@ const schemas = [businessSchema(), websiteSchema(), ...jsonLd].filter(Boolean);
         if (changed) window.history.replaceState({}, '', url.toString());
       } catch (e) {}
     })();
-  </script>
-
-  <!-- Google Tag Manager -->
-  <script is:inline define:vars={{ gtmId: site.analytics.gtm }}>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer',gtmId);
   </script>
 
   <slot name="head" />
@@ -155,6 +177,7 @@ const schemas = [businessSchema(), websiteSchema(), ...jsonLd].filter(Boolean);
 
   <StickyCTA />
   <CookieConsent />
+  <WebMCP />
 
   <style>
     .skip-link { position: absolute; left: -9999px; top: 0; background: var(--color-primary); color: #fff; padding: 0.75rem 1rem; z-index: 200; }

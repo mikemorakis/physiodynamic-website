@@ -94,9 +94,10 @@ public/         Στατικά αρχεία (εικόνες, hero.mp4, icons, ro
 
 ## Σημαντικά που πρέπει να ξέρεις
 
-- **Γραμματοσειρά:** Google Sans, φορτώνεται από το Google Fonts (στο `BaseLayout.astro`). Ρυθμίζεται μέσω των μεταβλητών `--font-body` / `--font-heading` στο `global.css`.
+- **Γραμματοσειρά:** Google Sans, **self-hosted** μέσω `@fontsource/google-sans` (μόνο greek+latin subsets, imports στο `global.css`, preload στο `BaseLayout.astro`). Ρυθμίζεται μέσω των μεταβλητών `--font-body` / `--font-heading` στο `global.css`.
 - **Εικόνες:** είναι βελτιστοποιημένες (max 1400px, quality ~82). Όταν προσθέτεις νέες, κράτα τες συμπιεσμένες — μεγάλες φωτογραφίες ρίχνουν την ταχύτητα.
-- **Hero video:** `public/hero.mp4` (1280px, χωρίς ήχο). Φορτώνει *μετά* το πρώτο render για γρήγορο LCP.
+- **Hero video:** `public/hero.mp4` (1280px, χωρίς ήχο). Φορτώνει *μετά* το πρώτο render για γρήγορο LCP. Τα posters (`hero-poster-*.jpg`) είναι καρέ του βίντεο σε 3 μεγέθη.
+- **Performance:** όλο το CSS γίνεται inline (astro.config), τα analytics (gtag/GTM) φορτώνουν στην πρώτη αλληλεπίδραση (ή μετά από 6s), τα κρυφά menus και τα below-fold sections χρησιμοποιούν `content-visibility` — μην αφαιρεθούν αυτά χωρίς λόγο, κρατούν το PageSpeed στο ~100.
 - **`_to_delete/`:** φάκελος με παλιά/backup αρχεία. Είναι στο `.gitignore` — αγνόησέ τον ή σβήσ' τον.
 - **SEO pillars:** Φυσικοθεραπεία (αρχική), Λειτουργική Μαγνητική Διέγερση (FMS), McKenzie. Κανόνας: κάθε νέο SEO άρθρο έχει **πίνακα**.
 - **Ραντεβού:** το booking URL είναι στο `src/data/site.ts` (`bookingUrl`).

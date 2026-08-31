@@ -1,0 +1,90 @@
+---
+// WebMCP: registers this site's capabilities as tools that AI agents
+// (WebMCP-capable browsers) can discover and call.
+// - Feature-detected: browsers without document.modelContext run nothing.
+// - Deferred to idle time: zero impact on load performance.
+// Spec: https://developer.chrome.com/docs/ai/webmcp (imperative API)
+import { site, services } from '../data/site';
+
+const serviceList = services.map((s) => ({
+  title: s.title,
+  url: `https://physiodynamic.com.gr/${s.slug}/`,
+}));
+
+const clinicInfo = {
+  name: site.name,
+  description: 'Σύγχρονο κέντρο φυσικοθεραπείας στο Παλαιό Φάληρο (Ιωάννης Κώτουλας, φυσικοθεραπευτής).',
+  address: site.addressLine,
+  phones: site.phones,
+  hours: 'Δευτέρα–Παρασκευή 09:00–21:00, Σαββατοκύριακο κλειστά',
+  insurance: 'Συμβεβλημένο με όλα τα ταμεία (ΕΟΠΥΥ).',
+  bookingUrl: site.bookingUrl,
+  website: 'https://physiodynamic.com.gr',
+};
+---
+<script is:inline define:vars={{ clinicInfo, serviceList }}>
+  (function () {
+    if (!('modelContext' in document) || typeof document.modelContext?.registerTool !== 'function') return;
+
+    function register() {
+      try {
+        document.modelContext.registerTool({
+          name: 'get_clinic_info',
+          description:
+            'Πληροφορίες για το κέντρο φυσικοθεραπείας Physio Dynamic στο Παλαιό Φάληρο: διεύθυνση, τηλέφωνα, ωράριο λειτουργίας και κάλυψη από ασφαλιστικά ταμεία.',
+          inputSchema: { type: 'object', properties: {} },
+          execute: async () => {
+            return [
+              clinicInfo.name + ' — ' + clinicInfo.description,
+              'Διεύθυνση: ' + clinicInfo.address,
+              'Τηλέφωνα: ' + clinicInfo.phones.join(', '),
+              'Ωράριο: ' + clinicInfo.hours,
+              clinicInfo.insurance,
+              'Ιστότοπος: ' + clinicInfo.website,
+            ].join('\n');
+          },
+        });
+
+        document.modelContext.registerTool({
+          name: 'list_services',
+          description:
+            'Λίστα όλων των υπηρεσιών φυσικοθεραπείας του Physio Dynamic (π.χ. McKenzie, Manual Therapy, Βελονισμός, Shockwave, Μαγνητικός Διεγέρτης FMS, Pilates) με το URL της κάθε υπηρεσίας.',
+          inputSchema: { type: 'object', properties: {} },
+          execute: async () => {
+            return serviceList.map((s) => s.title + ': ' + s.url).join('\n');
+          },
+        });
+
+        document.modelContext.registerTool({
+          name: 'book_appointment',
+          description:
+            'Πώς κλείνεται ραντεβού στο Physio Dynamic: επιστρέφει τον σύνδεσμο online κράτησης και τα τηλέφωνα του κέντρου.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              method: {
+                type: 'string',
+                enum: ['online', 'phone'],
+                description: 'Προτιμώμενος τρόπος κράτησης: online ή τηλεφωνικά.',
+              },
+            },
+          },
+          execute: async ({ method } = {}) => {
+            if (method === 'phone') {
+              return 'Κλείστε ραντεβού τηλεφωνικά: ' + clinicInfo.phones.join(' ή ') + ' (Δευτέρα–Παρασκευή 09:00–21:00).';
+            }
+            return (
+              'Online κράτηση ραντεβού: ' + clinicInfo.bookingUrl +
+              ' — Εναλλακτικά τηλεφωνικά: ' + clinicInfo.phones.join(' ή ')
+            );
+          },
+        });
+      } catch (e) {
+        /* Experimental API — never let it break the page. */
+      }
+    }
+
+    if ('requestIdleCallback' in window) requestIdleCallback(register, { timeout: 4000 });
+    else setTimeout(register, 1500);
+  })();
+</script>

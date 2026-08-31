@@ -6,6 +6,9 @@ export default defineConfig({
   trailingSlash: 'always',
   build: {
     format: 'directory',
+    // Inline all CSS into the HTML — removes render-blocking stylesheet requests
+    // (biggest FCP/LCP win on mobile).
+    inlineStylesheets: 'always',
   },
   integrations: [sitemap()],
   vite: {

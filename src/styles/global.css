@@ -1,5 +1,11 @@
-/* Google Sans (Greek + Latin) is loaded via <link> in BaseLayout.astro head
-   (fonts.googleapis.com), with display=swap. */
+/* Google Sans — self-hosted (Greek + Latin only), font-display: swap.
+   Self-hosting removes the render-blocking fonts.googleapis.com request. */
+@import '@fontsource/google-sans/latin-400.css';
+@import '@fontsource/google-sans/greek-400.css';
+@import '@fontsource/google-sans/latin-500.css';
+@import '@fontsource/google-sans/greek-500.css';
+@import '@fontsource/google-sans/latin-700.css';
+@import '@fontsource/google-sans/greek-700.css';
 
 :root {
   --color-primary: #10327c;
@@ -119,8 +125,17 @@ img { max-width: 100%; height: auto; display: block; }
   box-shadow: 0 10px 30px rgba(16, 50, 124, 0.08);
 }
 
+/* Below-the-fold sections: skip style/layout/paint work until scrolled near.
+   Big first-render win on long pages; the placeholder size keeps scroll stable. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}
+
 .eyebrow {
-  color: var(--color-accent-2);
+  /* Primary blue by default (readable on light backgrounds); dark hero
+     sections override this with the accent colour. */
+  color: var(--color-primary);
   font-family: var(--font-heading);
   font-weight: 700;
   text-transform: uppercase;
